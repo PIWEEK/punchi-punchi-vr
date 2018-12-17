@@ -7,6 +7,7 @@
 
 [sub_resource type="CylinderMesh" id=1]
 
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 top_radius = 0.2
 bottom_radius = 0.2
 height = 1.7
@@ -74,6 +75,7 @@ distance_fade_enable = false
 
 [sub_resource type="PlaneMesh" id=4]
 
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
@@ -189,6 +191,7 @@ _sections_unfolded = [ "Transform" ]
 
 stream = ExtResource( 3 )
 volume_db = 0.0
+pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
