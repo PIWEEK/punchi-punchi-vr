@@ -14,10 +14,5 @@ func _ready():
         Engine.target_fps = 90
 
 func _process(delta):
-    var bodies = get_node("ARVROrigin/ARVRCamera/Head").get_overlapping_bodies()
+    var bodies = get_node("Player/ARVRCamera/Head").get_overlapping_bodies()
     # print(bodies);
-
-
-func _on_Head_body_entered(body):
-    if body.get_name() == 'Dodge':
-        pass
