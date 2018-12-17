@@ -18,18 +18,39 @@ var LEFT_UPPER = 4
 var RIGHT_UPPER = 5
 var PAUSE = 6
 
+var HIT_NAMES = ["JAB", "CROSS", "L HOOK", "R HOOK", "L UPPER", "R UPPER", "WAIT"]
+
 var targets = []
 
 var loading_time = 5
 var song_started = false
-var wait = 3
+var wait = 4
 var RITHM = 500
 var TIME_VIEW = 350
 var BEAT_CORRECTION = 100
+var HIT_CORRECTION = 16
 
-var SEQUENCE = [JAB, CROSS, LEFT_UPPER, PAUSE, CROSS, JAB, RIGHT_UPPER, PAUSE]
+var SEQUENCE = [JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK]
 var current_seq
+
+var billboard
+var current_hit = -1
+
 func _ready():
+	# Get the viewport and clear it
+	var viewport = get_node("Viewport")
+	#viewport.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
+
+	# Let two frames pass to make sure the vieport's is captured
+	yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame")
+
+	# Retrieve the texture and set it to the viewport quad
+	get_node("Viewport_quad").material_override.albedo_texture = viewport.get_texture()
+
+
+	billboard = get_node("Viewport/Node2D/Label")
+	
 	left_controller_area = get_parent().get_node("Player/LeftController/TouchArea")
 	right_controller_area = get_parent().get_node("Player/RightController/TouchArea")
 	
@@ -41,25 +62,23 @@ func _ready():
 	targets.append(get_node("RightUpperTarget"))
 	targets.append(get_node("PauseTarget"))
 	
-	configure_target(get_node("JabTarget"), LEFT, left_hand_base_color, left_hand_touch_color)
-	configure_target(get_node("LeftHookTarget"), LEFT, left_hand_base_color, left_hand_touch_color)
-	configure_target(get_node("LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color)
-	configure_target(get_node("CrossTarget"), RIGHT, right_hand_base_color, right_hand_touch_color)
-	configure_target(get_node("RightHookTarget"), RIGHT, right_hand_base_color, right_hand_touch_color)
-	configure_target(get_node("RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color)
+	configure_target(get_node("JabTarget"), LEFT, left_hand_base_color, left_hand_touch_color, JAB)
+	configure_target(get_node("CrossTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, CROSS)
+	configure_target(get_node("LeftHookTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_HOOK)
+	configure_target(get_node("RightHookTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_HOOK)
+	configure_target(get_node("LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_UPPER)	
+	configure_target(get_node("RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_UPPER)
 	
 	song_started = false
 	loading_time = 5
+	current_hit = -1
 	
 	
-	
-		
-	
-	
-func configure_target(target, hand, base_color, touch_color):
+func configure_target(target, hand, base_color, touch_color, hit):
 	target.set_hand(hand)
 	target.set_base_color(base_color)
 	target.set_touch_color(touch_color)
+	target.set_hit(hit)
 
 func _process(delta):	
 	if loading_time <= 0:
@@ -77,7 +96,7 @@ func _process_hand(area, hand):
 	var bodies = area.get_overlapping_bodies()
 	if len(bodies) > 0:
 		for body in bodies:
-			if body is StaticBody and body.has_method("touch") and body.hand == hand:
+			if body is StaticBody and body.has_method("touch") and body.hand == hand and body.hit == current_hit:
 				current_body = body
 				break	
 	if current_body:
@@ -95,14 +114,22 @@ func _process_hand(area, hand):
 		
 func _process_rithm(delta):
 	wait -= delta
-	if wait < 0:
+	if wait > 0:
+		billboard.set_text(str(ceil(wait)))
+	else:
 		var music_ms = int(get_node("AudioStreamPlayer").get_playback_position() * 1000) + BEAT_CORRECTION
 		var remainder = music_ms % RITHM
-		current_seq = int(floor(music_ms / RITHM)) % len(SEQUENCE)
+		current_seq = int(floor(music_ms / RITHM) + HIT_CORRECTION) % len(SEQUENCE)
+		billboard.set_text(HIT_NAMES[SEQUENCE[current_seq]])
 		if remainder < TIME_VIEW:
-			targets[SEQUENCE[current_seq]].show()
+			current_hit = SEQUENCE[current_seq]
+			targets[current_hit].set_active()
+			if current_hit == CROSS:
+				targets[JAB].hide()
 		else:
-			targets[SEQUENCE[current_seq]].hide()
+			targets[SEQUENCE[current_seq]].set_inactive()
+			targets[JAB].show()
+			current_hit = -1
 			
 		
 #
