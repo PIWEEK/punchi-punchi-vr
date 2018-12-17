@@ -1,0 +1,18 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Iron Bacon.ogg-d24729b85fb44a77509558fa5fceee5a.oggstr"
+
+[deps]
+
+source_file="res://assets/music/Iron Bacon.ogg"
+source_md5="cf620af52b3eaa99a348befdf0235acb"
+
+dest_files=[ "res://.import/Iron Bacon.ogg-d24729b85fb44a77509558fa5fceee5a.oggstr" ]
+dest_md5="777c60fe92670b0d1ae517fbc3e1fad1"
+
+[params]
+
+loop=true
+loop_offset=0
