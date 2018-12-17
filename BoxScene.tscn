@@ -78,7 +78,7 @@ size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
 
-[node name="BoxScene" type="Spatial" index="0"]
+[node name="BoxScene" type="Spatial"]
 
 script = ExtResource( 1 )
 

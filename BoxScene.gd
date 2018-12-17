@@ -21,6 +21,7 @@ var PAUSE = 6
 var HIT_NAMES = ["JAB", "CROSS", "L HOOK", "R HOOK", "L UPPER", "R UPPER", "WAIT"]
 
 var targets = []
+var hands = []
 
 var loading_time = 5
 var song_started = false
@@ -53,6 +54,9 @@ func _ready():
 	
 	left_controller_area = get_parent().get_node("Player/LeftController/TouchArea")
 	right_controller_area = get_parent().get_node("Player/RightController/TouchArea")
+	
+	hands.append(get_parent().get_node("Player/LeftController"))
+	hands.append(get_parent().get_node("Player/RightController"))
 	
 	targets.append(get_node("JabTarget"))
 	targets.append(get_node("CrossTarget"))
@@ -106,10 +110,12 @@ func _process_hand(area, hand):
 		if last_body[hand]:
 			last_body[hand].untouch()
 			
-		current_body.touch()		
+		current_body.touch()				
 		last_body[hand] = current_body
+		hands[hand].rumble = 1
 	elif last_body[hand]:
 		last_body[hand].untouch()
+		hands[hand].rumble = 0
 		last_body[hand] = null
 		
 func _process_rithm(delta):
