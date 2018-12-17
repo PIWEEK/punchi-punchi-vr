@@ -13,7 +13,11 @@ func _ready():
         OS.vsync_enabled = false
         Engine.target_fps = 90
 
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+func _process(delta):
+    var bodies = get_node("ARVROrigin/ARVRCamera/Head").get_overlapping_bodies()
+    # print(bodies);
+
+
+func _on_Head_body_entered(body):
+    if body.get_name() == 'Dodge':
+        pass

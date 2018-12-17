@@ -1,7 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://addons/godot-openvr/scenes/ovr_controller.tscn" type="PackedScene" id=2]
+[ext_resource path="res://PunchiDodge.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CapsuleShape" id=2]
+
+radius = 1.0
+height = 1.0
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -21,7 +27,7 @@ world_scale = 1.0
 
 [node name="ARVRCamera" type="ARVRCamera" parent="ARVROrigin" index="0"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.220351, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.773149, 0 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -34,6 +40,37 @@ fov = 70.0
 size = 1.0
 near = 0.05
 far = 100.0
+_sections_unfolded = [ "Transform" ]
+
+[node name="Head" type="Area" parent="ARVROrigin/ARVRCamera" index="0"]
+
+input_ray_pickable = false
+input_capture_on_drag = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision_layer = 1
+collision_mask = 1
+audio_bus_override = false
+audio_bus_name = "Master"
+reverb_bus_enable = false
+reverb_bus_name = "Master"
+reverb_bus_amount = 0.0
+reverb_bus_uniformity = 0.0
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape" type="CollisionShape" parent="ARVROrigin/ARVRCamera/Head" index="0"]
+
+transform = Transform( 0.2, 0, 0, 0, -4.88762e-08, 0.3, 0, -0.3, -4.88762e-08, 0, 0, 0 )
+shape = SubResource( 2 )
+disabled = false
 _sections_unfolded = [ "Transform" ]
 
 [node name="LeftController" parent="ARVROrigin" index="1" instance=ExtResource( 2 )]
@@ -58,5 +95,11 @@ mesh = SubResource( 1 )
 skeleton = NodePath("..")
 material/0 = null
 _sections_unfolded = [ "Transform" ]
+
+[node name="PunchiDodge" parent="." index="2" instance=ExtResource( 3 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.89637 )
+
+[connection signal="body_entered" from="ARVROrigin/ARVRCamera/Head" to="." method="_on_Head_body_entered"]
 
 
