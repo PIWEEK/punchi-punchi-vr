@@ -23,39 +23,50 @@ var HIT_NAMES = ["JAB", "CROSS", "L HOOK", "R HOOK", "L UPPER", "R UPPER", "WAIT
 var targets = []
 var hands = []
 
-var loading_time = 5
+var loading_time = 6
 var song_started = false
-var wait = 4
+var wait = 2
 var RITHM = 500
 var TIME_VIEW = 350
 var BEAT_CORRECTION = 100
-var HIT_CORRECTION = 16
+var HIT_CORRECTION = -4
 
-var SEQUENCE = [JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK]
+var SEQUENCE = [JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE]
 var current_seq
 var last_seq
 
-var billboard
+var billboard_score
+var billboard_hits
 var current_hit = -1
 
 var sound_player
 var hit_sounds = []
+var MAX_TIME = 50
+var time = 50
+var points = 0
+var num_hits = 0
+var last_correct_hit = -1
 
 
 func _ready():
 	# Get the viewport and clear it
-	var viewport = get_node("Viewport")
-	#viewport.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
+	var viewport_hits = get_node("ViewportHits")
+	var viewport_score = get_node("ViewportScore")
 
-	# Let two frames pass to make sure the vieport's is captured
+	# Let four frames pass to make sure the vieport's is captured
 	yield(get_tree(), "idle_frame")
 	yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame")
+	
 
 	# Retrieve the texture and set it to the viewport quad
-	get_node("Viewport_quad").material_override.albedo_texture = viewport.get_texture()
+	get_node("ViewportHitsContainer").material_override.albedo_texture = viewport_hits.get_texture()
+	get_node("ViewportScoreContainer").material_override.albedo_texture = viewport_score.get_texture()
 
 
-	billboard = get_node("Viewport/Node2D/Label")
+	billboard_hits = get_node("ViewportHits/Node2D/Label")
+	billboard_score = get_node("ViewportScore/Node2D/Label")
 	sound_player = get_node("SoundPlayer")
 	# Preload sounds
 	hit_sounds.append(load("res://assets/music/jab.ogg"))
@@ -65,6 +76,8 @@ func _ready():
 	hit_sounds.append(load("res://assets/music/upper.ogg"))
 	hit_sounds.append(load("res://assets/music/upper.ogg"))
 	hit_sounds.append(null)
+	
+	get_node("AudioStreamPlayer").stream.set_loop(false)
 	
 	
 	left_controller_area = get_parent().get_node("Player/LeftController/TouchArea")
@@ -87,6 +100,9 @@ func _ready():
 	configure_target(get_node("RightHookTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_HOOK)
 	configure_target(get_node("LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_UPPER)	
 	configure_target(get_node("RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_UPPER)
+	
+	time = MAX_TIME
+	billboard_score.set_text("")
 	
 	song_started = false
 	loading_time = 5
@@ -128,6 +144,9 @@ func _process_hand(area, hand):
 		current_body.touch()				
 		last_body[hand] = current_body
 		hands[hand].rumble = 1
+		if last_correct_hit != num_hits:
+			points += 1			
+			last_correct_hit = num_hits
 	elif last_body[hand]:
 		last_body[hand].untouch()
 		hands[hand].rumble = 0
@@ -136,25 +155,43 @@ func _process_hand(area, hand):
 func _process_rithm(delta):
 	wait -= delta
 	if wait > 0:
-		billboard.set_text(str(ceil(wait)))
+		billboard_hits.set_text(str(ceil(wait)))		
 	else:
-		var music_ms = int(get_node("AudioStreamPlayer").get_playback_position() * 1000) + BEAT_CORRECTION
-		var remainder = music_ms % RITHM
-		current_seq = int(floor(music_ms / RITHM) + HIT_CORRECTION) % len(SEQUENCE)
-		billboard.set_text(HIT_NAMES[SEQUENCE[current_seq]])
-		if remainder < TIME_VIEW:
-			if current_seq != last_seq:
-				last_seq = current_seq
-				current_hit = SEQUENCE[current_seq]
-				talk_hit(current_hit)
-				
-				targets[current_hit].set_active()
-				if current_hit == CROSS:
-					targets[JAB].hide()
+		_process_time()
+		if time > 1:
+			var music_ms = int(get_node("AudioStreamPlayer").get_playback_position() * 1000) + BEAT_CORRECTION
+			var remainder = music_ms % RITHM
+			current_seq = int(floor(music_ms / RITHM) + HIT_CORRECTION) % len(SEQUENCE)
+			billboard_hits.set_text(HIT_NAMES[SEQUENCE[current_seq]])
+			if remainder < TIME_VIEW:
+				if current_seq != last_seq:
+					num_hits += 1
+					last_seq = current_seq
+					current_hit = SEQUENCE[current_seq]
+					talk_hit(current_hit)
+					
+					
+					targets[current_hit].set_active()
+					if current_hit == CROSS:
+						targets[JAB].hide()
+			else:
+				targets[SEQUENCE[current_seq]].set_inactive()
+				targets[JAB].show()
+				current_hit = -1
 		else:
 			targets[SEQUENCE[current_seq]].set_inactive()
-			targets[JAB].show()
-			current_hit = -1
+			billboard_hits.set_text("GOOD\NWORK!")
+			
+
+func _process_time():
+	time = int(ceil(MAX_TIME - get_node("AudioStreamPlayer").get_playback_position()))
+	if time < 0:
+		time = 0
+	if num_hits > 0:
+		var points_percent = round((float(points) / num_hits) * 100)
+		billboard_score.set_text(str(time)+"s\n"+str(points_percent)+"%")
+	
+	
 			
 func talk_hit(hit):
 	if hit_sounds[hit]:
