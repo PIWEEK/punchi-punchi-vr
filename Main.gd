@@ -13,7 +13,9 @@ func _ready():
     
         OS.vsync_enabled = false
         Engine.target_fps = 90
-		
+        get_node("ARVROrigin/RightController/LeftController/GloveL").show()
+        get_node("ARVROrigin/RightController/RightController/GloveR").show()
+
 
 func _process(delta):
     pass
