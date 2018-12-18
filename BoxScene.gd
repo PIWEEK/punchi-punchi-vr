@@ -29,13 +29,36 @@ var wait = 8
 var RITHM = 500
 var TIME_VIEW = 350
 var BEAT_CORRECTION = 100
-var HIT_CORRECTION = -4
+var HIT_CORRECTION = 0
+var current_training
 
-var ROUND = [
-	[JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS,],
-	[LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_UPPER, PAUSE, RIGHT_UPPER, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_UPPER, PAUSE, RIGHT_UPPER, PAUSE],
-	[JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_UPPER, PAUSE, RIGHT_UPPER, PAUSE]
+var TRAININGS = [
+	{
+		"rounds": [
+			[JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS],
+			[LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_UPPER, PAUSE, RIGHT_UPPER, PAUSE],
+			[JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_UPPER, PAUSE, RIGHT_UPPER, PAUSE]
+		],
+		"song": "ironbacon.ogg"
+	},
+	{
+		"rounds": [
+			[JAB, JAB, CROSS, PAUSE, JAB, JAB, CROSS, PAUSE],
+			[LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK],
+			[JAB, JAB, CROSS, PAUSE, JAB, JAB, CROSS, PAUSE, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK]
+		],
+		"song": "electrodoodle.ogg"
+	},
+	{
+		"rounds": [
+			[JAB, CROSS, LEFT_UPPER, PAUSE, CROSS, JAB, RIGHT_UPPER, PAUSE],
+			[LEFT_HOOK, RIGHT_HOOK, LEFT_UPPER, RIGHT_UPPER, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE],
+			[JAB, CROSS, LEFT_UPPER, PAUSE, CROSS, JAB, RIGHT_UPPER, PAUSE, LEFT_HOOK, RIGHT_HOOK, LEFT_UPPER, RIGHT_UPPER, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE]
+		],
+		"song": "beachfront.ogg"
+	}	
 ]
+
 
 var current_round_num = 0
 var current_round
@@ -63,8 +86,10 @@ var MODE_WAIT = 1
 var mode = MODE_PLAY
 var waiting_time = 0
 var root
+var song
 
 func _ready():
+	current_training = 1
 	root = get_node("/root/global")
 	# Get the viewport and clear it
 	var viewport_hits = get_node("ViewportHits")
@@ -95,7 +120,9 @@ func _ready():
 	hit_sounds.append(load("res://assets/music/upper.ogg"))
 	hit_sounds.append(null)
 	applause_sound = load("res://assets/music/applause.ogg")
+	song = load("res://assets/music/"+TRAININGS[current_training]["song"])
 	
+	get_node("AudioStreamPlayer").stream = song
 	get_node("AudioStreamPlayer").stream.set_loop(false)
 	
 	
@@ -120,13 +147,13 @@ func _ready():
 	configure_target(get_node("LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_UPPER)	
 	configure_target(get_node("RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_UPPER)	
 	loading_time = 2
-	reset(0)
+	reset(2)
 	
 	
 	
 func reset(round_num):
 	current_round_num = round_num
-	current_round = ROUND[current_round_num]
+	current_round = TRAININGS[current_training]["rounds"][current_round_num]
 	time = MAX_TIME
 	var text = ""
 	var num = 0
@@ -230,11 +257,12 @@ func _process_rithm(delta):
 			targets[current_round[current_seq]].set_inactive()
 			billboard_hits.set_text("GOOD\nWORK!")
 			waiting_time = 10			
-			mode = MODE_WAIT
-			get_node("AudioStreamPlayer").stop()
-			get_node("AudioStreamPlayer").seek(0)
-			_play_sound(applause_sound)
+			mode = MODE_WAIT			
+			sound_player.connect("finished", self, "play_applause", [sound_player])			
 			
+func play_applause(who):
+	sound_player.disconnect("finished", self, "play_applause")
+	_play_sound(applause_sound)
 
 func _process_time():
 	billboard_hint.hide()
