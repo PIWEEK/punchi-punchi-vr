@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://BoxScene.gd" type="Script" id=1]
 [ext_resource path="res://Target.tscn" type="PackedScene" id=2]
@@ -7,7 +7,6 @@
 
 [sub_resource type="CylinderMesh" id=1]
 
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 top_radius = 0.2
 bottom_radius = 0.2
 height = 1.7
@@ -17,6 +16,14 @@ rings = 4
 [sub_resource type="DynamicFont" id=2]
 
 size = 128
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 4 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=6]
+
+size = 48
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 4 )
@@ -75,7 +82,6 @@ distance_fade_enable = false
 
 [sub_resource type="PlaneMesh" id=4]
 
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
@@ -191,7 +197,6 @@ _sections_unfolded = [ "Transform" ]
 
 stream = ExtResource( 3 )
 volume_db = 0.0
-pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
@@ -284,6 +289,7 @@ _sections_unfolded = [ "Material", "Transform", "Visibility", "Z Index" ]
 
 [node name="Label" type="Label" parent="ViewportScore/Node2D" index="0"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -297,6 +303,29 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.100267, 0.773438, 0.0241699, 1 )
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
+
+[node name="Hint" type="Label" parent="ViewportScore/Node2D" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 800.0
+margin_bottom = 400.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0.100267, 0.773438, 0.0241699, 1 )
 align = 1
 valign = 1
