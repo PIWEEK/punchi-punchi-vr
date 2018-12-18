@@ -33,9 +33,14 @@ var HIT_CORRECTION = 16
 
 var SEQUENCE = [JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK]
 var current_seq
+var last_seq
 
 var billboard
 var current_hit = -1
+
+var sound_player
+var hit_sounds = []
+
 
 func _ready():
 	# Get the viewport and clear it
@@ -51,6 +56,16 @@ func _ready():
 
 
 	billboard = get_node("Viewport/Node2D/Label")
+	sound_player = get_node("SoundPlayer")
+	# Preload sounds
+	hit_sounds.append(load("res://assets/music/jab.ogg"))
+	hit_sounds.append(load("res://assets/music/cross.ogg"))
+	hit_sounds.append(load("res://assets/music/hook.ogg"))
+	hit_sounds.append(load("res://assets/music/hook.ogg"))
+	hit_sounds.append(load("res://assets/music/upper.ogg"))
+	hit_sounds.append(load("res://assets/music/upper.ogg"))
+	hit_sounds.append(null)
+	
 	
 	left_controller_area = get_parent().get_node("Player/LeftController/TouchArea")
 	right_controller_area = get_parent().get_node("Player/RightController/TouchArea")
@@ -128,23 +143,21 @@ func _process_rithm(delta):
 		current_seq = int(floor(music_ms / RITHM) + HIT_CORRECTION) % len(SEQUENCE)
 		billboard.set_text(HIT_NAMES[SEQUENCE[current_seq]])
 		if remainder < TIME_VIEW:
-			current_hit = SEQUENCE[current_seq]
-			targets[current_hit].set_active()
-			if current_hit == CROSS:
-				targets[JAB].hide()
+			if current_seq != last_seq:
+				last_seq = current_seq
+				current_hit = SEQUENCE[current_seq]
+				talk_hit(current_hit)
+				
+				targets[current_hit].set_active()
+				if current_hit == CROSS:
+					targets[JAB].hide()
 		else:
 			targets[SEQUENCE[current_seq]].set_inactive()
 			targets[JAB].show()
 			current_hit = -1
 			
-		
-#
-#
-#		timeout -= delta
-#		if timeout <=0:
-#			targets[SEQUENCE[current_seq]].hide()
-#			current_seq += 1
-#			current_seq = current_seq % len(SEQUENCE)
-#			timeout = RITHM
-#		elif timeout <= TIME_VIEW:
-#			targets[SEQUENCE[current_seq]].show()
+func talk_hit(hit):
+	if hit_sounds[hit]:
+		sound_player.stream = hit_sounds[hit]
+		sound_player.stream.set_loop(false)
+		sound_player.play()

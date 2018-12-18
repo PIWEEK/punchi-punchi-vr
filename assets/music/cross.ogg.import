@@ -1,0 +1,18 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/cross.ogg-b6ac85f4c55215b42a86bf771add056f.oggstr"
+
+[deps]
+
+source_file="res://assets/music/cross.ogg"
+source_md5="e8ec4e6de3527c8e5691f9a2c6cd1df5"
+
+dest_files=[ "res://.import/cross.ogg-b6ac85f4c55215b42a86bf771add056f.oggstr" ]
+dest_md5="3e3c28b09a70dac685c49f8373b74310"
+
+[params]
+
+loop=true
+loop_offset=0
