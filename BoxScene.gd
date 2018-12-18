@@ -1,0 +1,200 @@
+extends Spatial
+
+var left_controller_area
+var right_controller_area
+var last_body = [null, null]
+var left_hand_base_color = Color(0, 0, 255, 1)
+var left_hand_touch_color = Color(0, 255, 0, 1)
+var right_hand_base_color = Color(255, 0, 0, 1)
+var right_hand_touch_color = Color(0, 255, 0, 1)
+var LEFT = 0
+var RIGHT = 1
+
+var JAB = 0
+var CROSS = 1
+var LEFT_HOOK = 2
+var RIGHT_HOOK = 3
+var LEFT_UPPER = 4
+var RIGHT_UPPER = 5
+var PAUSE = 6
+
+var HIT_NAMES = ["JAB", "CROSS", "L HOOK", "R HOOK", "L UPPER", "R UPPER", "WAIT"]
+
+var targets = []
+var hands = []
+
+var loading_time = 6
+var song_started = false
+var wait = 2
+var RITHM = 500
+var TIME_VIEW = 350
+var BEAT_CORRECTION = 100
+var HIT_CORRECTION = -4
+
+var SEQUENCE = [JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE]
+var current_seq
+var last_seq
+
+var billboard_score
+var billboard_hits
+var current_hit = -1
+
+var sound_player
+var hit_sounds = []
+var MAX_TIME = 50
+var time = 50
+var points = 0
+var num_hits = 0
+var last_correct_hit = -1
+
+
+func _ready():
+	# Get the viewport and clear it
+	var viewport_hits = get_node("ViewportHits")
+	var viewport_score = get_node("ViewportScore")
+
+	# Let four frames pass to make sure the vieport's is captured
+	yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame")
+	
+
+	# Retrieve the texture and set it to the viewport quad
+	get_node("ViewportHitsContainer").material_override.albedo_texture = viewport_hits.get_texture()
+	get_node("ViewportScoreContainer").material_override.albedo_texture = viewport_score.get_texture()
+
+
+	billboard_hits = get_node("ViewportHits/Node2D/Label")
+	billboard_score = get_node("ViewportScore/Node2D/Label")
+	sound_player = get_node("SoundPlayer")
+	# Preload sounds
+	hit_sounds.append(load("res://assets/music/jab.ogg"))
+	hit_sounds.append(load("res://assets/music/cross.ogg"))
+	hit_sounds.append(load("res://assets/music/hook.ogg"))
+	hit_sounds.append(load("res://assets/music/hook.ogg"))
+	hit_sounds.append(load("res://assets/music/upper.ogg"))
+	hit_sounds.append(load("res://assets/music/upper.ogg"))
+	hit_sounds.append(null)
+	
+	get_node("AudioStreamPlayer").stream.set_loop(false)
+	
+	
+	left_controller_area = get_parent().get_node("Player/LeftController/TouchArea")
+	right_controller_area = get_parent().get_node("Player/RightController/TouchArea")
+	
+	hands.append(get_parent().get_node("Player/LeftController"))
+	hands.append(get_parent().get_node("Player/RightController"))
+	
+	targets.append(get_node("JabTarget"))
+	targets.append(get_node("CrossTarget"))
+	targets.append(get_node("LeftHookTarget"))
+	targets.append(get_node("RightHookTarget"))
+	targets.append(get_node("LeftUpperTarget"))
+	targets.append(get_node("RightUpperTarget"))
+	targets.append(get_node("PauseTarget"))
+	
+	configure_target(get_node("JabTarget"), LEFT, left_hand_base_color, left_hand_touch_color, JAB)
+	configure_target(get_node("CrossTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, CROSS)
+	configure_target(get_node("LeftHookTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_HOOK)
+	configure_target(get_node("RightHookTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_HOOK)
+	configure_target(get_node("LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_UPPER)	
+	configure_target(get_node("RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_UPPER)
+	
+	time = MAX_TIME
+	billboard_score.set_text("")
+	
+	song_started = false
+	loading_time = 5
+	current_hit = -1
+	
+	
+func configure_target(target, hand, base_color, touch_color, hit):
+	target.set_hand(hand)
+	target.set_base_color(base_color)
+	target.set_touch_color(touch_color)
+	target.set_hit(hit)
+
+func _process(delta):	
+	if loading_time <= 0:
+		if not song_started:
+			get_node("AudioStreamPlayer").play()
+			song_started = true
+		_process_hand(left_controller_area, LEFT)
+		_process_hand(right_controller_area, RIGHT)
+		_process_rithm(delta)
+	else:
+		loading_time -= delta
+	
+func _process_hand(area, hand):
+	var current_body = null
+	var bodies = area.get_overlapping_bodies()
+	if len(bodies) > 0:
+		for body in bodies:
+			if body is StaticBody and body.has_method("touch") and body.hand == hand and body.hit == current_hit:
+				current_body = body
+				break	
+	if current_body:
+		if current_body == last_body[hand]:
+			return
+			
+		if last_body[hand]:
+			last_body[hand].untouch()
+			
+		current_body.touch()				
+		last_body[hand] = current_body
+		hands[hand].rumble = 1
+		if last_correct_hit != num_hits:
+			points += 1			
+			last_correct_hit = num_hits
+	elif last_body[hand]:
+		last_body[hand].untouch()
+		hands[hand].rumble = 0
+		last_body[hand] = null
+		
+func _process_rithm(delta):
+	wait -= delta
+	if wait > 0:
+		billboard_hits.set_text(str(ceil(wait)))		
+	else:
+		_process_time()
+		if time > 1:
+			var music_ms = int(get_node("AudioStreamPlayer").get_playback_position() * 1000) + BEAT_CORRECTION
+			var remainder = music_ms % RITHM
+			current_seq = int(floor(music_ms / RITHM) + HIT_CORRECTION) % len(SEQUENCE)
+			billboard_hits.set_text(HIT_NAMES[SEQUENCE[current_seq]])
+			if remainder < TIME_VIEW:
+				if current_seq != last_seq:
+					num_hits += 1
+					last_seq = current_seq
+					current_hit = SEQUENCE[current_seq]
+					talk_hit(current_hit)
+					
+					
+					targets[current_hit].set_active()
+					if current_hit == CROSS:
+						targets[JAB].hide()
+			else:
+				targets[SEQUENCE[current_seq]].set_inactive()
+				targets[JAB].show()
+				current_hit = -1
+		else:
+			targets[SEQUENCE[current_seq]].set_inactive()
+			billboard_hits.set_text("GOOD\nWORK!")
+			
+
+func _process_time():
+	time = int(ceil(MAX_TIME - get_node("AudioStreamPlayer").get_playback_position()))
+	if time < 0:
+		time = 0
+	if num_hits > 0:
+		var points_percent = round((float(points) / num_hits) * 100)
+		billboard_score.set_text(str(time)+"s\n"+str(points_percent)+"%")
+	
+	
+			
+func talk_hit(hit):
+	if hit_sounds[hit]:
+		sound_player.stream = hit_sounds[hit]
+		sound_player.stream.set_loop(false)
+		sound_player.play()

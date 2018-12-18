@@ -68,6 +68,7 @@ world_scale = 1.0
 
 [node name="ARVRCamera" type="ARVRCamera" parent="." index="0"]
 
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.773149, 0 )
 keep_aspect = 1
 cull_mask = 1048575

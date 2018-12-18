@@ -1,12 +1,37 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://PunchiDodge.gd" type="Script" id=1]
-[ext_resource path="res://Dodge.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 
-[node name="PunchiDodge" type="Spatial"]
+[sub_resource type="PlaneMesh" id=1]
+
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+size = Vector2( 2, 2 )
+subdivide_width = 0
+subdivide_depth = 0
+
+[node name="PunchiDodge" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
 
-[node name="Dodge" parent="." index="0" instance=ExtResource( 2 )]
+[node name="MeshInstance" type="MeshInstance" parent="." index="0"]
+
+transform = Transform( 13.0559, 0, 0, 0, 1, 0, 0, 0, 13.0559, 0, 0, 0 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+
+[node name="Player" parent="." index="1" instance=ExtResource( 2 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.455839, 0 )
 
 
