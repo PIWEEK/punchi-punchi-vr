@@ -75,6 +75,7 @@ distance_fade_enable = false
 
 [sub_resource type="PlaneMesh" id=4]
 
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
@@ -130,7 +131,7 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
 
-[node name="BoxScene" type="Spatial" index="0"]
+[node name="BoxScene" type="Spatial"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
@@ -139,6 +140,7 @@ _sections_unfolded = [ "Transform" ]
 
 stream = null
 volume_db = 0.0
+pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
@@ -314,6 +316,7 @@ _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
 stream = null
 volume_db = 0.0
+pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"

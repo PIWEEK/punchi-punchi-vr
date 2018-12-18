@@ -4,11 +4,10 @@ extends StaticBody
 # var a = 2
 # var b = "textvar"
 
+var touched = false
+
 func _ready():
-    # Called when the node is added to the scene for the first time.
-    # Initialization here
     get_node("SpatialPunch").hide()
-    get_node("SpatialPunch").connect("animation_finished ", self, "delete")
 
 #func _process(delta):
 #    # Called every frame. Delta is time since last frame.
@@ -16,9 +15,19 @@ func _ready():
 #    pass
 
 func hit(): 
+    touched = true
     get_node("SpatialPunch").show()
     get_node("AnimationPlayer").play("Punch")
+    remove_child(get_node("Spatial"))
 
-func delete():
-    # print('sdfdsf')
+func _on_AnimationPlayer_animation_finished(anim_name):
     get_parent().remove_child(self)
+
+func dir(direction):
+    if direction == 'left':
+        get_node("Spatial").left()
+    elif direction == 'right':
+        get_node("Spatial").right()
+    else:
+        get_node("Spatial").both()
+        

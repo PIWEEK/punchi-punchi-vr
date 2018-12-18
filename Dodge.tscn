@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Dodge.gd" type="Script" id=1]
+[ext_resource path="res://IronBeam.tscn" type="PackedScene" id=2]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -82,6 +83,7 @@ _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="CollisionShape" type="CollisionShape" parent="." index="0"]
 
+editor/display_folded = true
 transform = Transform( 0.025, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 0, 0 )
 shape = SubResource( 1 )
 disabled = false
@@ -103,5 +105,9 @@ mesh = SubResource( 2 )
 skeleton = NodePath("..")
 material/0 = SubResource( 3 )
 _sections_unfolded = [ "Transform", "material" ]
+
+[node name="Spatial" parent="." index="1" instance=ExtResource( 2 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.57628e-07, -2.34317, 0 )
 
 

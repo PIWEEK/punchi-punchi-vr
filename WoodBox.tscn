@@ -1,11 +1,12 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://blender/wodd-box.obj" type="ArrayMesh" id=1]
-[ext_resource path="res://blender/box.jpg" type="Texture" id=2]
-[ext_resource path="res://blender/box-rgh.jpg" type="Texture" id=3]
-[ext_resource path="res://blender/box-glove-both.jpg" type="Texture" id=4]
-[ext_resource path="res://blender/box-glove-left.jpg" type="Texture" id=5]
-[ext_resource path="res://blender/box-glove-right.jpg" type="Texture" id=6]
+[ext_resource path="res://WoodBox.gd" type="Script" id=1]
+[ext_resource path="res://blender/wodd-box.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://blender/box.jpg" type="Texture" id=3]
+[ext_resource path="res://blender/box-rgh.jpg" type="Texture" id=4]
+[ext_resource path="res://blender/box-glove-both.jpg" type="Texture" id=5]
+[ext_resource path="res://blender/box-glove-left.jpg" type="Texture" id=6]
+[ext_resource path="res://blender/box-glove-right.jpg" type="Texture" id=7]
 
 [sub_resource type="SpatialMaterial" id=1]
 
@@ -31,12 +32,12 @@ params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
 albedo_color = Color( 0.539062, 0.505371, 0.505371, 1 )
-albedo_texture = ExtResource( 2 )
+albedo_texture = ExtResource( 3 )
 metallic = 0.0
 metallic_specular = 0.0
 metallic_texture_channel = 0
 roughness = 0.5
-roughness_texture = ExtResource( 3 )
+roughness_texture = ExtResource( 4 )
 roughness_texture_channel = 0
 emission_enabled = false
 normal_enabled = false
@@ -92,12 +93,12 @@ params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
 albedo_color = Color( 0.537255, 0.501961, 0.501961, 1 )
-albedo_texture = ExtResource( 4 )
+albedo_texture = ExtResource( 5 )
 metallic = 0.0
 metallic_specular = 0.0
 metallic_texture_channel = 0
 roughness = 0.5
-roughness_texture = ExtResource( 3 )
+roughness_texture = ExtResource( 4 )
 roughness_texture_channel = 0
 emission_enabled = false
 normal_enabled = false
@@ -153,12 +154,12 @@ params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
 albedo_color = Color( 0.537255, 0.501961, 0.501961, 1 )
-albedo_texture = ExtResource( 5 )
+albedo_texture = ExtResource( 6 )
 metallic = 0.0
 metallic_specular = 0.0
 metallic_texture_channel = 0
 roughness = 0.5
-roughness_texture = ExtResource( 3 )
+roughness_texture = ExtResource( 4 )
 roughness_texture_channel = 0
 emission_enabled = false
 normal_enabled = false
@@ -214,12 +215,12 @@ params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
 albedo_color = Color( 0.537255, 0.501961, 0.501961, 1 )
-albedo_texture = ExtResource( 6 )
+albedo_texture = ExtResource( 7 )
 metallic = 0.0
 metallic_specular = 0.0
 metallic_texture_channel = 0
 roughness = 0.5
-roughness_texture = ExtResource( 3 )
+roughness_texture = ExtResource( 4 )
 roughness_texture_channel = 0
 emission_enabled = false
 normal_enabled = false
@@ -244,11 +245,12 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Albedo", "Metallic", "Roughness" ]
 
-[node name="Spatial" type="Spatial" index="0"]
+[node name="Spatial" type="Spatial"]
+
+script = ExtResource( 1 )
 
 [node name="box" type="MeshInstance" parent="." index="0"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55464, 4.37167, 4.17136 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -258,42 +260,14 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = ExtResource( 1 )
+mesh = ExtResource( 2 )
 skeleton = NodePath("..")
 material/0 = SubResource( 1 )
-_sections_unfolded = [ "material" ]
+_sections_unfolded = [ "Transform", "material" ]
 
-[node name="DirectionalLight" type="DirectionalLight" parent="." index="1"]
+[node name="both" type="MeshInstance" parent="." index="1"]
 
-transform = Transform( -0.906919, 0, 0.421306, 0.217602, 0.856291, 0.468417, -0.360761, 0.516493, -0.776586, -2.42987, 6.5228, 1.43275 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
-light_energy = 5.0
-light_indirect_energy = 1.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.1
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
-directional_shadow_mode = 2
-directional_shadow_split_1 = 0.1
-directional_shadow_split_2 = 0.2
-directional_shadow_split_3 = 0.5
-directional_shadow_blend_splits = false
-directional_shadow_normal_bias = 0.8
-directional_shadow_bias_split_scale = 0.25
-directional_shadow_depth_range = 0
-directional_shadow_max_distance = 200.0
-_sections_unfolded = [ "Light" ]
-
-[node name="both" type="MeshInstance" parent="." index="2"]
-
-transform = Transform( 1, -0.000129938, -1.47605e-05, 1.69861e-05, 0.017149, 0.999853, -0.000129661, -0.999853, 0.017149, -1.58295, 4.37473, 3.14713 )
+transform = Transform( 1, -0.000129938, -1.47605e-05, 1.69861e-05, 0.017149, 0.999853, -0.000129661, -0.999853, 0.017149, 0, 0, -1.02 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -308,9 +282,10 @@ skeleton = NodePath("..")
 material/0 = SubResource( 3 )
 _sections_unfolded = [ "Transform", "material" ]
 
-[node name="left" type="MeshInstance" parent="." index="3"]
+[node name="left" type="MeshInstance" parent="." index="2"]
 
-transform = Transform( 1, -0.000129927, -1.47625e-05, 1.69888e-05, 0.0171519, 0.999853, -0.000129654, -0.999853, 0.0171519, -1.58295, 4.37473, 3.14713 )
+transform = Transform( 1, -0.000129927, -1.47625e-05, 1.69888e-05, 0.0171519, 0.999853, -0.000129654, -0.999853, 0.0171519, 0, 0, -1.02 )
+visible = false
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -325,9 +300,10 @@ skeleton = NodePath("..")
 material/0 = SubResource( 5 )
 _sections_unfolded = [ "Transform", "material" ]
 
-[node name="right" type="MeshInstance" parent="." index="4"]
+[node name="right" type="MeshInstance" parent="." index="3"]
 
-transform = Transform( 1, -0.000129927, -1.47625e-05, 1.69888e-05, 0.0171519, 0.999853, -0.000129654, -0.999853, 0.0171519, -1.58295, 4.37473, 3.14713 )
+transform = Transform( 1, -0.000129927, -1.47625e-05, 1.69888e-05, 0.0171519, 0.999853, -0.000129654, -0.999853, 0.0171519, 0, 0, -1.02 )
+visible = false
 layers = 1
 material_override = null
 cast_shadow = 1

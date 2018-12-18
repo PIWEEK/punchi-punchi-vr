@@ -1,6 +1,5 @@
 extends Spatial
 
-var timer 
 var dodgeScene = load("res://Dodge.tscn")
 var hitboxScene = load("res://HitBox.tscn")
 var head
@@ -9,6 +8,8 @@ var rightHand
 var leftHandTouch
 var rightHandTouch
 var root
+var INITIAL_POSITION = -32
+var level = 0
 
 func _ready():
     root = get_node("/root/global");
@@ -21,21 +22,24 @@ func _ready():
     rightHand = get_node("Player/RightController")
     
     leftHandTouch = get_node("Player/LeftController/TouchArea")
-    leftHandTouch.connect("body_entered", self, "punch")
+    leftHandTouch.connect("body_entered", self, "leftPunch")
     
     rightHandTouch = get_node("Player/RightController/TouchArea")
-    rightHandTouch.connect("body_entered", self, "punch")
+    rightHandTouch.connect("body_entered", self, "rightPunch")
     
-    timer = Timer.new()
-    timer.autostart = true
-    timer.set_wait_time(2)
-    timer.connect("timeout", self, "spawn")
-    add_child(timer)
+    root.setInterval(self, "spawn", 1)
 
 func _physics_process(delta):
+    var speed = 9 + (level * 0.5)
     for child in get_children():
-        if child.get_filename() == dodgeScene.get_path() or child.get_filename() == hitboxScene.get_path():
-            child.translate(Vector3(0, 0, delta * 2))
+        if isDodge(child):
+            child.translate(Vector3(0, 0, delta * speed))
+        elif isHitBox(child):
+            if child.touched:
+                child.translate(Vector3(0, 0, delta * -8))
+            else:
+                # print(speed)
+                child.translate(Vector3(0, 0, delta * speed))
             
             #var pos = child.get_transform()
             #pos.origin += pos.basis.z * (delta * 7)
@@ -51,21 +55,29 @@ func isHitBox(body):
 
 func body_enter(body): 
     if isDodge(body) or isHitBox(body):
-        # body.hit()
-        print('head hit!')
         self.remove_child(body)
         
-func punch(body): 
-    if isDodge(body) or isHitBox(body):
-        # body.hit()
-        body.get_parent().rumble = 1
+func leftPunch(body): 
+    leftHand.rumble = 1
+    body.hit()   
+    root.setTimeout(self, "stopRumble", 0.5)
+    
+func rightPunch(body): 
+    rightHand.rumble = 1
+    body.hit()       
+    root.setTimeout(self, "stopRumble", 0.5)
+    
+func increaseLevel():
+    if level < 50:
+        level = level + 1
         
-        # print('hand hit!')
-        self.remove_child(body)        
+func stopRumbe():
+    leftHand.rumble = 0
+    rightHand.rumble = 0
     
 func createDodge(type):
     var dodge = dodgeScene.instance()
-    dodge.translation = Vector3(0, root.fightRightHandPosition.y + 0.5, -8)
+    dodge.translation = Vector3(0, root.fightRightHandPosition.y + 0.5, INITIAL_POSITION)
     
     if type == "crouch":
         dodge.crouch()
@@ -75,9 +87,10 @@ func createDodge(type):
         dodge.right()
         
     add_child(dodge)
+    increaseLevel()
     
 func createHitBox(position):
-    var htibox = hitboxScene.instance()
+    var hitbox = hitboxScene.instance()
     
     var y
     var x = 0
@@ -88,26 +101,29 @@ func createHitBox(position):
     elif position == 1: # top left
        y = root.fightRightHandPosition.y + 0.25
        x = -0.5
+       hitbox.dir("left")
     elif position == 2: # top right
        y = root.fightRightHandPosition.y + 0.25
        x = 0.5
+       hitbox.dir("right")
     elif position == 3: # bottom left
        y = root.fightRightHandPosition.y
        x = -0.5
+       hitbox.dir("left")
     elif position == 4: # bottom right
        y = root.fightRightHandPosition.y
        x = 0.5            
+       hitbox.dir("right")
     
-    htibox.translation = Vector3(x, y, -8)
+    hitbox.translation = Vector3(x, y, INITIAL_POSITION)
     
-    add_child(htibox)
-    
-    htibox.hit()
+    add_child(hitbox)
+    increaseLevel()
     
 func spawn(): 
     var randomFigure = randi() % 9
     
-    if randomFigure > 6:
+    if randomFigure > 7:
         var randomNum = randi() % 3
     
         if randomNum == 0:

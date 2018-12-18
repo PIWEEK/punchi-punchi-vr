@@ -44,3 +44,21 @@ func initVR():
     
         OS.vsync_enabled = false
         Engine.target_fps = 90
+        
+func setTimeout(context, function, time):
+    var timer = Timer.new()
+    timer.autostart = true
+    timer.set_wait_time(time)
+    timer.one_shot = true
+    timer.connect("timeout", context, function)
+    context.add_child(timer)
+    
+    return timer
+    
+func setInterval(context, function, time):
+    var timer = Timer.new()
+    timer.autostart = true
+    timer.set_wait_time(time)
+    timer.connect("timeout", context, function)
+    context.add_child(timer)
+    return timer    
