@@ -84,10 +84,10 @@ material/0 = SubResource( 2 )
 _sections_unfolded = [ "Transform", "material" ]
 
 [node name="Player" parent="." index="1" instance=ExtResource( 2 )]
-[node name="MeshInstance2" type="MeshInstance" parent="." index="2"]
+[node name="BoxScene" parent="." index="2" instance=ExtResource( 3 )]
+
+[node name="MeshInstance2" type="MeshInstance" parent="." index="3"]
 
 
-
-[node name="BoxScene" parent="." index="3" instance=ExtResource( 3 )]
 
 
