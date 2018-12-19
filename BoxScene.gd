@@ -263,7 +263,7 @@ func _process_rithm(delta):
 			waiting_time = 10			
 			mode = MODE_WAIT		
 			for t in targets:	
-				t.untouch()
+				t.set_inactive()
 			hands[0].rumble = 0
 			hands[1].rumble = 0
 			sound_player.connect("finished", self, "play_applause", [sound_player])			
