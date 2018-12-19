@@ -31,6 +31,7 @@ var TIME_VIEW = 350
 var BEAT_CORRECTION = 100
 var HIT_CORRECTION = -4
 var current_training
+var boxing_punch
 
 var TRAININGS = [
 	{
@@ -88,6 +89,7 @@ var mode = MODE_PLAY
 var waiting_time = 0
 var root
 var song
+var punch_rotation_target = Vector3(0, 0, 0)
 
 func _ready():
 	current_training = 1
@@ -107,7 +109,7 @@ func _ready():
 	get_node("ViewportHitsContainer").material_override.albedo_texture = viewport_hits.get_texture()
 	get_node("ViewportScoreContainer").material_override.albedo_texture = viewport_score.get_texture()
 
-
+	boxing_punch = get_node("BoxingPunch")
 	billboard_hits = get_node("ViewportHits/Node2D/Label")
 	billboard_hint = get_node("ViewportScore/Node2D/Hint")
 	billboard_score = get_node("ViewportScore/Node2D/Label")
@@ -149,7 +151,9 @@ func _ready():
 	configure_target(get_node("BoxingPunch/LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_UPPER)	
 	configure_target(get_node("BoxingPunch/RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_UPPER)	
 	loading_time = 2
-	reset(0)
+	reset(2)
+	
+	
 	
 	
 	
@@ -203,6 +207,7 @@ func _process(delta):
 				reset(current_round_num + 1)
 			else:
 				root.goto_scene("res://Calibration.tscn")
+	rotate_punch(delta)
 	
 func _process_hand(area, hand):
 	var current_body = null
@@ -225,6 +230,18 @@ func _process_hand(area, hand):
 		if last_correct_hit != num_hits:
 			points += 1			
 			last_correct_hit = num_hits
+			if current_hit == JAB or current_hit == CROSS:
+				punch_rotation_target.x = -0.05
+			elif current_hit == LEFT_UPPER:
+				punch_rotation_target.y = -0.8
+				punch_rotation_target.x = 0.03
+			elif current_hit == LEFT_HOOK:
+				punch_rotation_target.y = -0.8
+			elif current_hit == RIGHT_UPPER:
+				punch_rotation_target.y = 0.8
+				punch_rotation_target.x = 0.03
+			elif current_hit == RIGHT_HOOK:
+				punch_rotation_target.y = 0.8
 	elif last_body[hand]:
 		last_body[hand].untouch()
 		hands[hand].rumble = 0
@@ -299,3 +316,27 @@ func _play_sound(sound):
 	sound_player.stream = sound
 	sound_player.stream.set_loop(false)
 	sound_player.play()
+	
+func rotate_punch(delta):
+	if boxing_punch:		
+		var speed = 1
+		var amount = delta * speed
+		rotate_punch_direction(Vector3(1, 0, 0), amount, 'x')
+		rotate_punch_direction(Vector3(0, 1, 0), amount, 'y')
+		rotate_punch_direction(Vector3(0, 0, 1), amount, 'z')
+					
+func rotate_punch_direction(axis, amount, direction):
+	if punch_rotation_target[direction] > boxing_punch.rotation[direction]:						
+		boxing_punch.rotate(axis, amount)
+		if boxing_punch.rotation[direction] >= punch_rotation_target[direction]:			
+			if punch_rotation_target[direction] == 0:
+				boxing_punch.rotation[direction] = 0
+			else:
+				punch_rotation_target[direction] = 0
+	elif punch_rotation_target[direction] < boxing_punch.rotation[direction]:
+		boxing_punch.rotate(axis, -amount)
+		if boxing_punch.rotation[direction] <= punch_rotation_target[direction]:			
+			if punch_rotation_target[direction] == 0:
+				boxing_punch.rotation[direction] = 0
+			else:
+				punch_rotation_target[direction] = 0
