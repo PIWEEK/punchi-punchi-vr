@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://BoxScene.gd" type="Script" id=1]
 [ext_resource path="res://Target.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://BoxingPunch.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CylinderMesh" id=1]
 
@@ -143,6 +144,7 @@ script = ExtResource( 1 )
 [node name="Bag" type="MeshInstance" parent="." index="0"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.985591 )
+visible = false
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -374,5 +376,10 @@ volume_db = 0.0
 autoplay = false
 mix_target = 0
 bus = "Master"
+
+[node name="BoxingPunch" parent="." index="14" instance=ExtResource( 4 )]
+
+transform = Transform( 0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.321979, 0.289803, -0.424576 )
+_sections_unfolded = [ "Transform", "material" ]
 
 
