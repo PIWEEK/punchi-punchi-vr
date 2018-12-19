@@ -13,7 +13,17 @@ func _ready():
     
         OS.vsync_enabled = false
         Engine.target_fps = 90
-		
+        
+        var material = SpatialMaterial.new()
+        material.albedo_color = Color(0, 0, 255, 1)
+        get_node("Player/LeftController/GloveL").set_surface_material(0, material)
+        get_node("Player/LeftController/GloveL").show()
+
+        material = SpatialMaterial.new()
+        material.albedo_color = Color(255, 0, 0, 1)
+        get_node("Player/RightController/GloveR").set_surface_material(0, material)
+        get_node("Player/RightController/GloveR").show()
+
 
 func _process(delta):
     pass

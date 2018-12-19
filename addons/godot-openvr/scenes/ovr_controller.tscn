@@ -1,4 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/3d/glove_left.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://assets/3d/glove_rigth.obj" type="ArrayMesh" id=2]
 
 [sub_resource type="GDScript" id=1]
 
@@ -59,7 +62,7 @@ func _process(delta):
 
 radius = 0.1
 
-[node name="OVRController" type="ARVRController"]
+[node name="OVRController" type="ARVRController" index="0"]
 
 controller_id = 1
 rumble = 0.0
@@ -68,6 +71,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Controller_mesh" type="MeshInstance" parent="." index="0"]
 
+visible = false
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -107,5 +111,41 @@ reverb_bus_uniformity = 0.0
 
 shape = SubResource( 2 )
 disabled = false
+
+[node name="GloveL" type="MeshInstance" parent="." index="2"]
+
+transform = Transform( 1.5299e-009, 2.64986e-009, -0.07, 0.0606218, -0.035, 0, -0.035, -0.0606218, -3.0598e-009, 0, 0.1, 0.25 )
+visible = false
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = ExtResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Geometry", "Transform", "material" ]
+
+[node name="GloveR" type="MeshInstance" parent="." index="3"]
+
+transform = Transform( 1.5299e-009, 2.64986e-009, -0.07, 0.0606218, -0.035, 0, -0.035, -0.0606218, -3.0598e-009, -0.2, 0.1, 0.25 )
+visible = false
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = ExtResource( 2 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Transform" ]
 
 
