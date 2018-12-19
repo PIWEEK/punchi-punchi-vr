@@ -1,24 +1,16 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://BoxScene.gd" type="Script" id=1]
-[ext_resource path="res://Target.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://BoxingPunch.tscn" type="PackedScene" id=4]
-
-[sub_resource type="CylinderMesh" id=1]
-
-top_radius = 0.2
-bottom_radius = 0.2
-height = 1.7
-radial_segments = 64
-rings = 4
+[ext_resource path="res://assets/fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://BoxingPunch.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Target.tscn" type="PackedScene" id=4]
 
 [sub_resource type="DynamicFont" id=2]
 
 size = 128
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 3 )
+font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=3]
@@ -26,7 +18,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 36
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 3 )
+font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="SpatialMaterial" id=4]
@@ -141,60 +133,7 @@ distance_fade_enable = false
 
 script = ExtResource( 1 )
 
-[node name="Bag" type="MeshInstance" parent="." index="0"]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.985591 )
-visible = false
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 1 )
-skeleton = NodePath("..")
-material/0 = null
-_sections_unfolded = [ "Geometry", "Transform" ]
-
-[node name="JabTarget" parent="." index="1" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.8 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="CrossTarget" parent="." index="2" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.8 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="LeftHookTarget" parent="." index="3" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17, 1.5, -0.9 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="RightHookTarget" parent="." index="4" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.17, 1.5, -0.9 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="LeftUpperTarget" parent="." index="5" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1, -0.85 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="RightUpperTarget" parent="." index="6" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1, -0.85 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="PauseTarget" parent="." index="7" instance=ExtResource( 2 )]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1000, -0.8 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="8"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="0"]
 
 stream = null
 volume_db = 0.0
@@ -202,7 +141,7 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="ViewportHits" type="Viewport" parent="." index="9"]
+[node name="ViewportHits" type="Viewport" parent="." index="1"]
 
 arvr = false
 size = Vector2( 800, 400 )
@@ -257,7 +196,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
 
-[node name="ViewportScore" type="Viewport" parent="." index="10"]
+[node name="ViewportScore" type="Viewport" parent="." index="2"]
 
 arvr = false
 size = Vector2( 800, 400 )
@@ -335,7 +274,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
 
-[node name="ViewportHitsContainer" type="MeshInstance" parent="." index="11"]
+[node name="ViewportHitsContainer" type="MeshInstance" parent="." index="3"]
 
 transform = Transform( -0.939692, 0.342021, 9.64943e-08, 0, -2.8213e-07, 1, 0.342021, 0.939692, 2.65115e-07, -2.5, 2, -5 )
 layers = 1
@@ -352,7 +291,7 @@ skeleton = NodePath("..")
 material/0 = null
 _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
-[node name="ViewportScoreContainer" type="MeshInstance" parent="." index="12"]
+[node name="ViewportScoreContainer" type="MeshInstance" parent="." index="4"]
 
 transform = Transform( -0.939692, -0.342021, -0.000118102, -1.12515e-10, -0.000345305, 1, -0.342021, 0.939692, 0.000324481, 2.5, 2, -5 )
 layers = 1
@@ -369,7 +308,7 @@ skeleton = NodePath("..")
 material/0 = null
 _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
-[node name="SoundPlayer" type="AudioStreamPlayer" parent="." index="13"]
+[node name="SoundPlayer" type="AudioStreamPlayer" parent="." index="5"]
 
 stream = null
 volume_db = 0.0
@@ -377,9 +316,44 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="BoxingPunch" parent="." index="14" instance=ExtResource( 4 )]
+[node name="BoxingPunch" parent="." index="6" instance=ExtResource( 3 )]
 
 transform = Transform( 0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, -0.255811, 0.504014, -0.489658 )
 _sections_unfolded = [ "Transform", "material" ]
+
+[node name="JabTarget" parent="BoxingPunch" index="1" instance=ExtResource( 4 )]
+
+transform = Transform( 8.33333, 0, 0, 0, 8.33333, 0, 0, 0, 8.33333, 2.13176, 8.29988, -2.58618 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CrossTarget" parent="BoxingPunch" index="2" instance=ExtResource( 4 )]
+
+transform = Transform( 8.33333, 0, 0, 0, 8.33333, 0, 0, 0, 8.33333, 2.13176, 8.29988, -2.58618 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="LeftHookTarget" parent="BoxingPunch" index="3" instance=ExtResource( 4 )]
+
+transform = Transform( 8.33333, 0, 0, 0, 8.33333, 0, 0, 0, 8.33333, 0.715095, 8.29988, -3.41952 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="RightHookTarget" parent="BoxingPunch" index="4" instance=ExtResource( 4 )]
+
+transform = Transform( 8.33333, 0, 0, 0, 8.33333, 0, 0, 0, 8.33333, 3.54843, 8.29988, -3.41952 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="LeftUpperTarget" parent="BoxingPunch" index="5" instance=ExtResource( 4 )]
+
+transform = Transform( 8.33333, 0, 0, 0, 8.33333, 0, 0, 0, 8.33333, 1.29843, 4.13321, -3.00285 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="RightUpperTarget" parent="BoxingPunch" index="6" instance=ExtResource( 4 )]
+
+transform = Transform( 8.33333, 0, 0, 0, 8.33333, 0, 0, 0, 8.33333, 2.9651, 4.13321, -3.00285 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="PauseTarget" parent="BoxingPunch" index="7" instance=ExtResource( 4 )]
+
+transform = Transform( 8.33333, 0, 0, 0, 8.33333, 0, 0, 0, 8.33333, 2.13176, -8337.53, -2.58618 )
+_sections_unfolded = [ "Transform" ]
 
 

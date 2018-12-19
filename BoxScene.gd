@@ -29,7 +29,7 @@ var wait = 8
 var RITHM = 500
 var TIME_VIEW = 350
 var BEAT_CORRECTION = 100
-var HIT_CORRECTION = 0
+var HIT_CORRECTION = -4
 var current_training
 
 var TRAININGS = [
@@ -73,6 +73,7 @@ var current_hit = -1
 
 var sound_player
 var applause_sound
+var bell_sound
 var hit_sounds = []
 var MAX_TIME = 55
 var time = 55
@@ -120,6 +121,7 @@ func _ready():
 	hit_sounds.append(load("res://assets/music/upper.ogg"))
 	hit_sounds.append(null)
 	applause_sound = load("res://assets/music/applause.ogg")
+	bell_sound = load("res://assets/music/bell.ogg")
 	song = load("res://assets/music/"+TRAININGS[current_training]["song"])
 	
 	get_node("AudioStreamPlayer").stream = song
@@ -132,26 +134,27 @@ func _ready():
 	hands.append(get_parent().get_node("Player/LeftController"))
 	hands.append(get_parent().get_node("Player/RightController"))
 	
-	targets.append(get_node("JabTarget"))
-	targets.append(get_node("CrossTarget"))
-	targets.append(get_node("LeftHookTarget"))
-	targets.append(get_node("RightHookTarget"))
-	targets.append(get_node("LeftUpperTarget"))
-	targets.append(get_node("RightUpperTarget"))
-	targets.append(get_node("PauseTarget"))
+	targets.append(get_node("BoxingPunch/JabTarget"))
+	targets.append(get_node("BoxingPunch/CrossTarget"))
+	targets.append(get_node("BoxingPunch/LeftHookTarget"))
+	targets.append(get_node("BoxingPunch/RightHookTarget"))
+	targets.append(get_node("BoxingPunch/LeftUpperTarget"))
+	targets.append(get_node("BoxingPunch/RightUpperTarget"))
+	targets.append(get_node("BoxingPunch/PauseTarget"))
 	
-	configure_target(get_node("JabTarget"), LEFT, left_hand_base_color, left_hand_touch_color, JAB)
-	configure_target(get_node("CrossTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, CROSS)
-	configure_target(get_node("LeftHookTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_HOOK)
-	configure_target(get_node("RightHookTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_HOOK)
-	configure_target(get_node("LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_UPPER)	
-	configure_target(get_node("RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_UPPER)	
+	configure_target(get_node("BoxingPunch/JabTarget"), LEFT, left_hand_base_color, left_hand_touch_color, JAB)
+	configure_target(get_node("BoxingPunch/CrossTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, CROSS)
+	configure_target(get_node("BoxingPunch/LeftHookTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_HOOK)
+	configure_target(get_node("BoxingPunch/RightHookTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_HOOK)
+	configure_target(get_node("BoxingPunch/LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_UPPER)	
+	configure_target(get_node("BoxingPunch/RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_UPPER)	
 	loading_time = 2
 	reset(0)
 	
 	
 	
 func reset(round_num):
+	_play_sound(bell_sound)
 	current_round_num = round_num
 	current_round = TRAININGS[current_training]["rounds"][current_round_num]
 	time = MAX_TIME
@@ -229,8 +232,11 @@ func _process_hand(area, hand):
 		
 func _process_rithm(delta):
 	wait -= delta
-	if wait > 0:
+	if wait > 5:
+		billboard_hits.set_text("ROUND  "+str(current_round_num + 1))
+	elif wait > 0:
 		billboard_hits.set_text(str(ceil(wait)))
+		
 	else:
 		_process_time()
 		if time > 0:
