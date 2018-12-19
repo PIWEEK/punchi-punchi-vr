@@ -379,7 +379,7 @@ bus = "Master"
 
 [node name="BoxingPunch" parent="." index="14" instance=ExtResource( 4 )]
 
-transform = Transform( 0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.321979, 0.289803, -0.424576 )
+transform = Transform( 0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, -0.267928, 0.429972, -0.451821 )
 _sections_unfolded = [ "Transform", "material" ]
 
 

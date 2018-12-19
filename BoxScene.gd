@@ -249,9 +249,12 @@ func _process_rithm(delta):
 					targets[current_hit].set_active()
 					if current_hit == CROSS:
 						targets[JAB].hide()
+					if current_hit == JAB:
+						targets[CROSS].hide()
 			else:
 				targets[current_round[current_seq]].set_inactive()
 				targets[JAB].show()
+				targets[CROSS].show()
 				current_hit = -1
 		else:
 			targets[current_round[current_seq]].set_inactive()
