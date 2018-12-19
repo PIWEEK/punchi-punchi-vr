@@ -247,6 +247,7 @@ func _process_rithm(delta):
 					
 					
 					targets[current_hit].set_active()
+					targets[current_hit].show()
 					if current_hit == CROSS:
 						targets[JAB].hide()
 					if current_hit == JAB:
@@ -260,7 +261,11 @@ func _process_rithm(delta):
 			targets[current_round[current_seq]].set_inactive()
 			billboard_hits.set_text("GOOD\nWORK!")
 			waiting_time = 10			
-			mode = MODE_WAIT			
+			mode = MODE_WAIT		
+			for t in targets:	
+				t.untouch()
+			hands[0].rumble = 0
+			hands[1].rumble = 0
 			sound_player.connect("finished", self, "play_applause", [sound_player])			
 			
 func play_applause(who):

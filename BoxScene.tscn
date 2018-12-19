@@ -23,7 +23,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=3]
 
-size = 48
+size = 36
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 3 )
@@ -379,7 +379,7 @@ bus = "Master"
 
 [node name="BoxingPunch" parent="." index="14" instance=ExtResource( 4 )]
 
-transform = Transform( 0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, -0.267928, 0.429972, -0.451821 )
+transform = Transform( 0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, -0.255811, 0.504014, -0.489658 )
 _sections_unfolded = [ "Transform", "material" ]
 
 
