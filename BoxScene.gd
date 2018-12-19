@@ -147,7 +147,7 @@ func _ready():
 	configure_target(get_node("LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_UPPER)	
 	configure_target(get_node("RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_UPPER)	
 	loading_time = 2
-	reset(2)
+	reset(0)
 	
 	
 	
