@@ -2,12 +2,10 @@
 
 [ext_resource path="res://BoxScene.gd" type="Script" id=1]
 [ext_resource path="res://Target.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/music/Iron Bacon.ogg" type="AudioStream" id=3]
-[ext_resource path="res://assets/fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://assets/fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="CylinderMesh" id=1]
 
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 top_radius = 0.2
 bottom_radius = 0.2
 height = 1.7
@@ -19,10 +17,18 @@ rings = 4
 size = 128
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 4 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="DynamicFont" id=3]
+
+size = 48
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 3 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="SpatialMaterial" id=4]
 
 render_priority = 0
 flags_transparent = false
@@ -73,14 +79,13 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
 
-[sub_resource type="PlaneMesh" id=4]
+[sub_resource type="PlaneMesh" id=5]
 
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
 
-[sub_resource type="SpatialMaterial" id=5]
+[sub_resource type="SpatialMaterial" id=6]
 
 render_priority = 0
 flags_transparent = false
@@ -189,9 +194,8 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="8"]
 
-stream = ExtResource( 3 )
+stream = null
 volume_db = 0.0
-pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
@@ -284,6 +288,7 @@ _sections_unfolded = [ "Material", "Transform", "Visibility", "Z Index" ]
 
 [node name="Label" type="Label" parent="ViewportScore/Node2D" index="0"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -305,11 +310,34 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
 
+[node name="Hint" type="Label" parent="ViewportScore/Node2D" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 800.0
+margin_bottom = 400.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.100267, 0.773438, 0.0241699, 1 )
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
+
 [node name="ViewportHitsContainer" type="MeshInstance" parent="." index="11"]
 
 transform = Transform( -0.939692, 0.342021, 9.64943e-08, 0, -2.8213e-07, 1, 0.342021, 0.939692, 2.65115e-07, -2.5, 2, -5 )
 layers = 1
-material_override = SubResource( 3 )
+material_override = SubResource( 4 )
 cast_shadow = 1
 extra_cull_margin = 0.0
 use_in_baked_light = false
@@ -317,7 +345,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 4 )
+mesh = SubResource( 5 )
 skeleton = NodePath("..")
 material/0 = null
 _sections_unfolded = [ "Geometry", "Transform", "material" ]
@@ -326,7 +354,7 @@ _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
 transform = Transform( -0.939692, -0.342021, -0.000118102, -1.12515e-10, -0.000345305, 1, -0.342021, 0.939692, 0.000324481, 2.5, 2, -5 )
 layers = 1
-material_override = SubResource( 5 )
+material_override = SubResource( 6 )
 cast_shadow = 1
 extra_cull_margin = 0.0
 use_in_baked_light = false
@@ -334,7 +362,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 4 )
+mesh = SubResource( 5 )
 skeleton = NodePath("..")
 material/0 = null
 _sections_unfolded = [ "Geometry", "Transform", "material" ]
