@@ -29,24 +29,25 @@ var wait = 8
 var RITHM = 500
 var TIME_VIEW = 350
 var BEAT_CORRECTION = 100
-var HIT_CORRECTION = -4
+var HIT_CORRECTION = 0
 var current_training
 var boxing_punch
+var dummy
 
 var TRAININGS = [
 	{
 		"rounds": [
-			[JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS],
-			[LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_UPPER, PAUSE, RIGHT_UPPER, PAUSE],
-			[JAB, CROSS, JAB, CROSS, JAB, CROSS, JAB, CROSS, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_UPPER, PAUSE, RIGHT_UPPER, PAUSE]
+			[JAB, PAUSE, CROSS, PAUSE, JAB, PAUSE, CROSS, PAUSE],
+			[LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE],
+			[JAB, PAUSE, CROSS, PAUSE, JAB, PAUSE, CROSS, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE]
 		],
 		"song": "ironbacon.ogg"
 	},
 	{
 		"rounds": [
 			[JAB, JAB, CROSS, PAUSE, JAB, JAB, CROSS, PAUSE],
-			[LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK],
-			[JAB, JAB, CROSS, PAUSE, JAB, JAB, CROSS, PAUSE, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK]
+			[LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK],
+			[JAB, JAB, CROSS, PAUSE, JAB, JAB, CROSS, PAUSE, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK]
 		],
 		"song": "electrodoodle.ogg"
 	},
@@ -110,6 +111,7 @@ func _ready():
 	get_node("ViewportScoreContainer").material_override.albedo_texture = viewport_score.get_texture()
 
 	boxing_punch = get_node("BoxingPunch")
+	dummy = get_node("Dummy")
 	billboard_hits = get_node("ViewportHits/Node2D/Label")
 	billboard_hint = get_node("ViewportScore/Node2D/Hint")
 	billboard_score = get_node("ViewportScore/Node2D/Label")
@@ -151,7 +153,7 @@ func _ready():
 	configure_target(get_node("BoxingPunch/LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_UPPER)	
 	configure_target(get_node("BoxingPunch/RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_UPPER)	
 	loading_time = 2
-	reset(2)
+	reset(0)
 	
 	
 	
@@ -180,6 +182,10 @@ func reset(round_num):
 	current_hit = -1
 	last_seq = -1
 	wait = 8
+	
+	for t in targets:	
+		t.set_inactive()
+				
 	mode = MODE_PLAY
 	
 	
@@ -233,15 +239,15 @@ func _process_hand(area, hand):
 			if current_hit == JAB or current_hit == CROSS:
 				punch_rotation_target.x = -0.05
 			elif current_hit == LEFT_UPPER:
-				punch_rotation_target.y = -0.8
+				punch_rotation_target.y = -0.1
 				punch_rotation_target.x = 0.03
 			elif current_hit == LEFT_HOOK:
-				punch_rotation_target.y = -0.8
+				punch_rotation_target.y = -0.1
 			elif current_hit == RIGHT_UPPER:
-				punch_rotation_target.y = 0.8
+				punch_rotation_target.y = 0.1
 				punch_rotation_target.x = 0.03
 			elif current_hit == RIGHT_HOOK:
-				punch_rotation_target.y = 0.8
+				punch_rotation_target.y = 0.1
 	elif last_body[hand]:
 		last_body[hand].untouch()
 		hands[hand].rumble = 0
@@ -267,7 +273,9 @@ func _process_rithm(delta):
 					last_seq = current_seq
 					current_hit = current_round[current_seq]
 					talk_hit(current_hit)
-					
+					dummy_hit(current_hit)
+					if current_hit == PAUSE:
+						points += 1
 					
 					targets[current_hit].set_active()
 					targets[current_hit].show()
@@ -286,7 +294,7 @@ func _process_rithm(delta):
 			waiting_time = 10			
 			mode = MODE_WAIT		
 			for t in targets:	
-				t.set_inactive()
+				t.untouch()
 			hands[0].rumble = 0
 			hands[1].rumble = 0
 			sound_player.connect("finished", self, "play_applause", [sound_player])			
@@ -340,3 +348,17 @@ func rotate_punch_direction(axis, amount, direction):
 				boxing_punch.rotation[direction] = 0
 			else:
 				punch_rotation_target[direction] = 0
+				
+func dummy_hit(hit):
+	if hit == JAB:
+		dummy.jab()
+	elif hit == CROSS:
+		dummy.cross()
+	elif hit == LEFT_UPPER:
+		dummy.left_upper()
+	elif hit == LEFT_HOOK:
+		dummy.left_hook()
+	elif hit == RIGHT_UPPER:
+		dummy.right_upper()
+	elif hit == RIGHT_HOOK:
+		dummy.right_hook()
