@@ -73,3 +73,14 @@ func setInterval(context, function, time):
     timer.connect("timeout", context, function)
     context.add_child(timer)
     return timer    
+    
+func initGloves(node):
+    var material = SpatialMaterial.new()
+    material.albedo_color = Color(0, 0, 255, 1)
+    node.get_node("Player/LeftController/GloveL").set_surface_material(0, material)
+    node.get_node("Player/LeftController/GloveL").show()
+
+    material = SpatialMaterial.new()
+    material.albedo_color = Color(255, 0, 0, 1)
+    node.get_node("Player/RightController/GloveR").set_surface_material(0, material)
+    node.get_node("Player/RightController/GloveR").show()

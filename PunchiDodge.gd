@@ -14,6 +14,7 @@ var level = 0
 func _ready():
     root = get_node("/root/global");
     root.initVR()
+    root.initGloves(self)
     
     head = get_node("Player/ARVRCamera/Head")
     head.connect("body_entered", self, "body_enter")
@@ -28,6 +29,9 @@ func _ready():
     rightHandTouch.connect("body_entered", self, "rightPunch")
     
     root.setInterval(self, "spawn", 1)
+
+func _process(delta):
+    print(Performance.get_monitor(Performance.TIME_FPS)) # Prints the FPS to the console
 
 func _physics_process(delta):
     print(Performance.get_monitor(Performance.TIME_FPS))
