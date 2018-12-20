@@ -196,7 +196,7 @@ subsurf_scatter_enabled = false
 transmission_enabled = false
 refraction_enabled = false
 detail_enabled = false
-uv1_scale = Vector3( 2, 1, 2 )
+uv1_scale = Vector3( 5, 1, 2 )
 uv1_offset = Vector3( 0, 0, 0 )
 uv1_triplanar = true
 uv1_triplanar_sharpness = 1.0
@@ -208,7 +208,7 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Flags", "Roughness", "UV1", "UV2" ]
 
-[sub_resource type="ProceduralSky" id=8]
+[sub_resource type="ProceduralSky" id=7]
 
 radiance_size = 4
 sky_top_color = Color( 0.0470588, 0.454902, 0.976471, 1 )
@@ -229,10 +229,10 @@ sun_energy = 16.0
 texture_size = 1
 _sections_unfolded = [ "Ground", "Sky", "Sun", "Texture" ]
 
-[sub_resource type="Environment" id=7]
+[sub_resource type="Environment" id=8]
 
 background_mode = 2
-background_sky = SubResource( 8 )
+background_sky = SubResource( 7 )
 background_sky_custom_fov = 0.0
 background_color = Color( 0, 0, 0, 1 )
 background_energy = 1.0
@@ -311,11 +311,11 @@ _sections_unfolded = [ "Ambient Light", "Background" ]
 
 [node name="Gym" type="Spatial"]
 
-transform = Transform( -2.8213e-07, 0, -1, 0, 1, 0, 1, 0, -2.8213e-07, -11.625, 0.0345287, 13.686 )
+transform = Transform( -2.8213e-007, 0, -1, 0, 1, 0, 1, 0, -2.8213e-007, -11.625, 0.0345287, 13.686 )
 
 [node name="Lights" type="Spatial" parent="." index="0"]
 
-transform = Transform( -2.8213e-07, 0, 1, 0, 1, 0, -1, 0, -2.8213e-07, -13.686, -0.0345287, -11.625 )
+transform = Transform( -2.8213e-007, 0, 1, 0, 1, 0, -1, 0, -2.8213e-007, -13.686, -0.0345287, -11.625 )
 
 [node name="Right1" type="DirectionalLight" parent="Lights" index="0"]
 
@@ -375,7 +375,7 @@ _sections_unfolded = [ "Directional Shadow", "Editor", "Light", "Shadow" ]
 
 [node name="Ceil" type="MeshInstance" parent="." index="1"]
 
-transform = Transform( -3.71444e-06, 0, 13.1657, 0, 0.0836377, 0, -13.1657, 0, -3.71444e-06, -25.5953, 6.49202, -11.5441 )
+transform = Transform( -3.71444e-006, 0, 21.8424, 0, 0.0836377, 0, -13.1657, 0, -6.1624e-006, -33.7532, 6.49202, -11.5441 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -392,7 +392,7 @@ _sections_unfolded = [ "Transform", "Visibility", "material" ]
 
 [node name="Floor" type="MeshInstance" parent="." index="2"]
 
-transform = Transform( -3.68346e-06, 0, 13.0559, 0, 1, 0, -13.0559, 0, -3.68346e-06, -25.2488, -0.0345287, -11.5099 )
+transform = Transform( -3.68346e-006, 0, 21.992, 0, 1, 0, -13.0559, 0, -6.20461e-006, -33.7318, -0.0345287, -11.5099 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -409,7 +409,7 @@ _sections_unfolded = [ "Geometry" ]
 
 [node name="BakedLightmap" type="BakedLightmap" parent="." index="3"]
 
-transform = Transform( 1.5738, 0, -5.29206e-08, 0, 0.68625, 0, -5.29205e-08, 0, 1.38622, -27, 0, -12 )
+transform = Transform( 1.5738, 0, -5.29206e-008, 0, 0.68625, 0, -5.29205e-008, 0, 1.38622, -27, 0, -12 )
 layers = 1
 bake_cell_size = 0.25
 bake_quality = 1
@@ -424,7 +424,7 @@ light_data = null
 
 [node name="Wall1" type="MeshInstance" parent="." index="4"]
 
-transform = Transform( 12.9763, 0, -3.65149e-06, 0, 3.40127, 0, -3.65149e-06, 0, 0.03375, -25.2479, 3.06895, 1.00001 )
+transform = Transform( 22.5973, 0, -6.36586e-006, 0, 3.40127, 0, -6.36585e-006, 0, 0.03375, -32.2413, 3.06895, 1.00001 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -441,7 +441,7 @@ _sections_unfolded = [ "material" ]
 
 [node name="Wall2" type="MeshInstance" parent="." index="5"]
 
-transform = Transform( 12.9763, 0, -3.65149e-06, 0, 2.36864, 0, -3.65149e-06, 0, 0.03375, -25.2479, 2.21832, -24.4641 )
+transform = Transform( 21.7205, 0, -6.11849e-006, 0, 2.36864, 0, -6.11848e-006, 0, 0.03375, -33.6567, 2.21832, -24.4641 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -458,7 +458,7 @@ _sections_unfolded = [ "material" ]
 
 [node name="Wall3" type="MeshInstance" parent="." index="6"]
 
-transform = Transform( -2.11411e-06, 0, 0.03375, 0, 3.40127, 0, -12.9763, 0, -5.49858e-09, -37.7699, 3.06895, -11.649 )
+transform = Transform( -2.11411e-006, 0, 0.03375, 0, 3.40127, 0, -12.9763, 0, -5.49858e-009, -54.9966, 3.06895, -11.649 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -475,7 +475,7 @@ _sections_unfolded = [ "Transform", "material" ]
 
 [node name="Wall4" type="MeshInstance" parent="." index="7"]
 
-transform = Transform( -2.11411e-06, 0, 0.03375, 0, 3.40127, 0, -12.9763, 0, -5.49858e-09, -12.3442, 3.06895, -11.649 )
+transform = Transform( -2.11411e-006, 0, 0.03375, 0, 3.40127, 0, -12.9763, 0, -5.49858e-009, -12.3442, 3.06895, -11.649 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -492,6 +492,6 @@ _sections_unfolded = [ "Transform", "material" ]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="8"]
 
-environment = SubResource( 7 )
+environment = SubResource( 8 )
 
 

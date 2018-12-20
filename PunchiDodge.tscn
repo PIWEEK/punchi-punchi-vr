@@ -60,7 +60,7 @@ multimesh = SubResource( 2 )
 
 [node name="Score" parent="." index="4" instance=ExtResource( 5 )]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.36925, 2.96111, -22.6061 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.36925, 2.96111, -41.1132 )
 
 [node name="Limit" type="Area" parent="." index="5"]
 

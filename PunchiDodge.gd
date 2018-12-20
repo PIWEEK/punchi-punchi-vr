@@ -8,7 +8,7 @@ var rightHand
 var leftHandTouch
 var rightHandTouch
 var root
-var INITIAL_POSITION = -32
+var INITIAL_POSITION = -48
 var level = 0
 var score
 var points = 0
@@ -41,7 +41,9 @@ func _ready():
     score.printScore(points)
 
 func _physics_process(delta):
-    # print(Performance.get_monitor(Performance.TIME_FPS))
+    print(Performance.get_monitor(Performance.TIME_FPS))
+    var overlappingLeft = leftHandTouch.get_overlapping_bodies()
+    var overlappingRight = rightHandTouch.get_overlapping_bodies()
     var speed = 9 + (level * 0.5)
     
     for child in get_children():
@@ -51,8 +53,18 @@ func _physics_process(delta):
             if child.touched:
                 child.translate(Vector3(0, 0, delta * -1))
             else:
+                var isOverlapping = false
+                for overlap in overlappingLeft:
+                    if overlap == child:
+                        isOverlapping = true
+                for overlap in overlappingRight:
+                    if overlap == child:
+                        isOverlapping = true      
+                        
                 # print(speed)
-                child.translate(Vector3(0, 0, delta * speed))
+                print(isOverlapping)Q
+                if !isOverlapping:
+                    child.translate(Vector3(0, 0, delta * speed))
     
 func isDodge(body):
     return body.get_filename() == dodgeScene.get_path()
@@ -60,8 +72,9 @@ func isDodge(body):
 func isHitBox(body):
     return body.get_filename() == hitboxScene.get_path()
 
+# head
 func body_enter(body): 
-    if isDodge(body):
+    if isDodge(body) or isHitBox(body):
         if points > 0:
             points = points - 1
             score.printScore(points)
@@ -93,8 +106,10 @@ func rightPunch(body):
             score.printScore(points)    
     
 func increaseLevel():
-    if level < 50:
-        level = level + 1
+    if level < 100:
+        level = level + 1.5
+    else:
+        print("limit")
         
 func stopRumbe():
     leftHand.rumble = 0
@@ -119,6 +134,8 @@ func createHitBox(position):
     
     var y
     var x = 0
+    
+    position = 1
     
     if position == 0: # top
        y = root.fightRightHandPosition.y + 0.5
@@ -168,6 +185,11 @@ func spawn():
         createHitBox(hitBoxPosition);
     
 func limitArea(body):
+    if isHitBox(body):
+        if points > 0:
+            points = points - 1
+            score.printScore(points)
+            
     self.remove_child(body)
 
 # func _process(delta):

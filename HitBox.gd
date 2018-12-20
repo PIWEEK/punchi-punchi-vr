@@ -22,7 +22,7 @@ func _ready():
 func hit(): 
     if !touched:
         touched = true
-        remove_child(get_node("Spatial"))
+        get_node("Spatial").hide()
         particles.emitting = true
         particles.one_shot = true
         
