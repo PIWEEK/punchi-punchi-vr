@@ -131,25 +131,29 @@ var numbers = [
 ]
 
 var root
-var currentNumber = 0
 var panel1
 var panel2
 
+func printScore(score):
+    score = str(score)
+    
+    if score.length() > 1:
+        printNumber(panel1, int(score[0]))
+        printNumber(panel2, int(score[1]))
+    else: 
+        printNumber(panel1, 0)
+        printNumber(panel2, int(score[0]))
+
 func _ready():
+    for number in numbers:
+        number.invert()
+    
     root = get_node("/root/global");
     panel1 = createPanel(Vector3(0, 0, 0), 9, 5)
     panel2 = createPanel(Vector3(2, 0, 0), 9, 5)
     
     add_child(panel1)
     add_child(panel2)
-    
-    root.setInterval(self, "spawnNumber", 1)
-
-func spawnNumber():
-    printNumber(panel1, currentNumber)
-    
-    if currentNumber < 9:
-        currentNumber = currentNumber + 1
     
 func createPanel(position, rows, colums):
     var panel = Spatial.new()
@@ -200,11 +204,11 @@ func printNumber(panel, number):
     var children = panel.get_children()
     var currentNumber = numbers[number]
         
-    currentNumber.invert()
-        
     for rowIndex in range(currentNumber.size()):  
         for columnIndex in range(currentNumber[rowIndex].size()):
+            var columns = children[rowIndex].get_children()
+            #columns.invert()
             if currentNumber[rowIndex][columnIndex] == 1:
-                changeStatus(children[rowIndex].get_children()[columnIndex], true)
+                changeStatus(columns[columnIndex], true)
             else:
-                changeStatus(children[rowIndex].get_children()[columnIndex], false)
+                changeStatus(columns[columnIndex], false)

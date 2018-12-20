@@ -245,7 +245,7 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Albedo", "Metallic", "Roughness" ]
 
-[node name="Spatial" type="Spatial" index="0"]
+[node name="Spatial" type="Spatial"]
 
 script = ExtResource( 1 )
 
@@ -267,7 +267,8 @@ _sections_unfolded = [ "Transform", "material" ]
 
 [node name="both" type="MeshInstance" parent="." index="1"]
 
-transform = Transform( 1, -0.000129938, -1.47605e-05, 1.69861e-05, 0.017149, 0.999853, -0.000129661, -0.999853, 0.017149, 0, 0, -1.02 )
+transform = Transform( 1, -0.000129938, -1.47605e-005, 1.69861e-005, 0.017149, 0.999853, -0.000129661, -0.999853, 0.017149, 0, 0, -1.02 )
+visible = false
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -284,7 +285,8 @@ _sections_unfolded = [ "Transform", "material" ]
 
 [node name="left" type="MeshInstance" parent="." index="2"]
 
-transform = Transform( 1, -0.000129927, -1.47625e-05, 1.69888e-05, 0.0171519, 0.999853, -0.000129654, -0.999853, 0.0171519, 0, 0, -1.02 )
+transform = Transform( 1, -0.000129927, -1.47625e-005, 1.69888e-005, 0.0171519, 0.999853, -0.000129654, -0.999853, 0.0171519, 0, 0, -1.02 )
+visible = false
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -301,7 +303,8 @@ _sections_unfolded = [ "Transform", "material" ]
 
 [node name="right" type="MeshInstance" parent="." index="3"]
 
-transform = Transform( 1, -0.000129927, -1.47625e-05, 1.69888e-05, 0.0171519, 0.999853, -0.000129654, -0.999853, 0.0171519, 0, 0, -1.02 )
+transform = Transform( 1, -0.000129927, -1.47625e-005, 1.69888e-005, 0.0171519, 0.999853, -0.000129654, -0.999853, 0.0171519, 0, 0, -1.02 )
+visible = false
 layers = 1
 material_override = null
 cast_shadow = 1

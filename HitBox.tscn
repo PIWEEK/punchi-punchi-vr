@@ -112,13 +112,13 @@ _sections_unfolded = [ "Collision", "Transform" ]
 
 editor/display_folded = true
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-visible = false
 shape = SubResource( 1 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
 [node name="MeshInstance" type="MeshInstance" parent="CollisionShape" index="0"]
 
+visible = false
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -139,7 +139,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="Punch" type="MeshInstance" parent="SpatialPunch" index="0"]
 
-transform = Transform( -3.19851e-05, -0.999999, -0.000391698, 3.03042e-08, 0.000815412, 0.0634205, -0.0634201, -6.63822e-05, -2.97936e-08, 0.00827371, -7.77504e-06, 6.27831e-07 )
+transform = Transform( -3.19851e-005, -0.999999, -0.000391698, 3.03042e-008, 0.000815412, 0.0634205, -0.0634201, -6.63822e-005, -2.97936e-008, 0.00827371, -7.77504e-006, 6.27831e-007 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -167,7 +167,7 @@ _sections_unfolded = [ "Playback Options" ]
 
 [node name="Spatial" parent="." index="3" instance=ExtResource( 3 )]
 
-transform = Transform( -0.2, 0, -6.51683e-08, 0, 0.2, 0, 6.51683e-08, 0, -0.2, 0, 0, 0 )
+transform = Transform( -0.2, 0, -6.51683e-008, 0, 0.2, 0, 6.51683e-008, 0, -0.2, 0, 0, 0 )
 _sections_unfolded = [ "Transform" ]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

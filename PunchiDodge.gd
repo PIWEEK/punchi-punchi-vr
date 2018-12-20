@@ -10,6 +10,10 @@ var rightHandTouch
 var root
 var INITIAL_POSITION = -32
 var level = 0
+var score
+var points = 0
+var lastHitbox
+var limit
 
 func _ready():
     root = get_node("/root/global");
@@ -28,15 +32,18 @@ func _ready():
     rightHandTouch = get_node("Player/RightController/TouchArea")
     rightHandTouch.connect("body_entered", self, "rightPunch")
     
+    limit = get_node("Limit")
+    limit.connect("body_entered", self, "limitArea")
+    
+    score = get_node("Score")
+    
     root.setInterval(self, "spawn", 1)
-
-func _process(delta):
-    print(Performance.get_monitor(Performance.TIME_FPS)) # Prints the FPS to the console
+    score.printScore(points)
 
 func _physics_process(delta):
-    print(Performance.get_monitor(Performance.TIME_FPS))
-    
+    # print(Performance.get_monitor(Performance.TIME_FPS))
     var speed = 9 + (level * 0.5)
+    
     for child in get_children():
         if isDodge(child):
             child.translate(Vector3(0, 0, delta * speed))
@@ -46,12 +53,6 @@ func _physics_process(delta):
             else:
                 # print(speed)
                 child.translate(Vector3(0, 0, delta * speed))
-            
-            #var pos = child.get_transform()
-            #pos.origin += pos.basis.z * (delta * 7)
-            #child.set_transform(pos)
-            #print(child.get_filename())
-            #print(child.get_transform())
     
 func isDodge(body):
     return body.get_filename() == dodgeScene.get_path()
@@ -60,18 +61,36 @@ func isHitBox(body):
     return body.get_filename() == hitboxScene.get_path()
 
 func body_enter(body): 
-    if isDodge(body) or isHitBox(body):
+    if isDodge(body):
+        if points > 0:
+            points = points - 1
+            score.printScore(points)
+            
         self.remove_child(body)
+    
+func stopRumble():
+    leftHand.rumble = 0
+    rightHand.rumble = 0    
         
 func leftPunch(body): 
-    leftHand.rumble = 1
-    body.hit()   
-    root.setTimeout(self, "stopRumble", 0.5)
+    if isHitBox(body) and !body.touched:
+        leftHand.rumble = 1
+        body.hit()   
+        root.setTimeout(self, "stopRumble", 0.25)
+        
+        if points < 100:
+            points = points + 1
+            score.printScore(points)    
     
 func rightPunch(body): 
-    rightHand.rumble = 1
-    body.hit()       
-    root.setTimeout(self, "stopRumble", 0.5)
+    if isHitBox(body) and !body.touched:
+        rightHand.rumble = 1
+        body.hit()       
+        root.setTimeout(self, "stopRumble", 0.25)
+        
+        if points < 100:
+            points = points + 1
+            score.printScore(points)    
     
 func increaseLevel():
     if level < 50:
@@ -104,6 +123,7 @@ func createHitBox(position):
     if position == 0: # top
        y = root.fightRightHandPosition.y + 0.5
        x = 0
+       hitbox.dir("center")
     elif position == 1: # top left
        y = root.fightRightHandPosition.y + 0.25
        x = -0.5
@@ -126,6 +146,11 @@ func createHitBox(position):
     add_child(hitbox)
     increaseLevel()
     
+    if !lastHitbox:
+        get_node("AudioStreamPlayer").play()
+    
+    lastHitbox = hitbox
+    
 func spawn(): 
     var randomFigure = randi() % 9
     
@@ -142,6 +167,8 @@ func spawn():
         var hitBoxPosition = randi() % 5
         createHitBox(hitBoxPosition);
     
+func limitArea(body):
+    self.remove_child(body)
 
 # func _process(delta):
 #    var bodies = get_node("Player/ARVRCamera/Head").get_overlapping_bodies()

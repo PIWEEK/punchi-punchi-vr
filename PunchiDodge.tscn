@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://PunchiDodge.gd" type="Script" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/music/dodge.ogg" type="AudioStream" id=3]
 [ext_resource path="res://Gym.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Score.tscn" type="PackedScene" id=5]
 
 [sub_resource type="ArrayMesh" id=1]
 
@@ -19,7 +20,11 @@ mesh = SubResource( 1 )
 transform_array = PoolVector3Array(  )
 color_array = PoolColorArray(  )
 
-[node name="PunchiDodge" type="Spatial"]
+[sub_resource type="BoxShape" id=3]
+
+extents = Vector3( 1, 1, 1 )
+
+[node name="PunchiDodge" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
 
@@ -32,7 +37,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.455839, 0 )
 stream = ExtResource( 3 )
 volume_db = 0.0
 pitch_scale = 1.0
-autoplay = true
+autoplay = false
 mix_target = 0
 bus = "Master"
 
@@ -52,5 +57,39 @@ lod_max_hysteresis = 0.0
 multimesh = SubResource( 2 )
 
 [node name="Gym" parent="." index="3" instance=ExtResource( 4 )]
+
+[node name="Score" parent="." index="4" instance=ExtResource( 5 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.36925, 2.96111, -22.6061 )
+
+[node name="Limit" type="Area" parent="." index="5"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11.8005 )
+input_ray_pickable = false
+input_capture_on_drag = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision_layer = 1
+collision_mask = 1
+audio_bus_override = false
+audio_bus_name = "Master"
+reverb_bus_enable = false
+reverb_bus_name = "Master"
+reverb_bus_amount = 0.0
+reverb_bus_uniformity = 0.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Limit" index="0"]
+
+transform = Transform( 6.73926, 0, 0, 0, 6.73926, 0, 0, 0, 1, 0, 0, -9.06608 )
+shape = SubResource( 3 )
+disabled = false
 
 

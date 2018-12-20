@@ -15,10 +15,11 @@ func _ready():
 #    pass
 
 func hit(): 
-    touched = true
-    get_node("SpatialPunch").show()
-    get_node("AnimationPlayer").play("Punch")
-    remove_child(get_node("Spatial"))
+    if !touched:
+        touched = true
+        remove_child(get_node("Spatial"))
+        get_node("SpatialPunch").show()
+        get_node("AnimationPlayer").play("Punch")
 
 func _on_AnimationPlayer_animation_finished(anim_name):
     get_parent().remove_child(self)
