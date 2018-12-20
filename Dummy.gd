@@ -313,4 +313,32 @@ func translate_punch_direction(amount, direction):
 	return gloves[glove].translation[direction] == punch_translation_target[direction]
 			
 				
-			
+
+func dummy_hit(hit):
+	if hit == global.JAB:
+		jab()
+	elif hit == global.CROSS:
+		cross()
+	elif hit == global.LEFT_UPPER:
+		left_upper()
+	elif hit == global.LEFT_HOOK:
+		left_hook()
+	elif hit == global.RIGHT_UPPER:
+		right_upper()
+	elif hit == global.RIGHT_HOOK:
+		right_hook()	
+		
+func reset():
+	hits_sequence.clear()
+	hits_sequence.append({
+		'glove': 0,
+		'rotation': Vector3(punch_rotation_zero[0].x, punch_rotation_zero[0].y, punch_rotation_zero[0].z),
+		'target': Vector3(punch_translation_zero[0].x, punch_translation_zero[0].y, punch_translation_zero[0].z),
+		'speed': 1000
+	})
+	hits_sequence.append({
+		'glove': 1,
+		'rotation': Vector3(punch_rotation_zero[1].x, punch_rotation_zero[1].y, punch_rotation_zero[1].z),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y, punch_translation_zero[1].z),
+		'speed': 1000
+	})

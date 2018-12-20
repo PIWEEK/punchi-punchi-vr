@@ -10,13 +10,6 @@ var right_hand_touch_color = Color(0, 255, 0, 1)
 var LEFT = 0
 var RIGHT = 1
 
-var JAB = 0
-var CROSS = 1
-var LEFT_HOOK = 2
-var RIGHT_HOOK = 3
-var LEFT_UPPER = 4
-var RIGHT_UPPER = 5
-var PAUSE = 6
 
 var targets = []
 var hands = []
@@ -27,11 +20,8 @@ var wait = 8
 var RITHM = 500
 var TIME_VIEW = 350
 var BEAT_CORRECTION = 100
-var HIT_CORRECTION = 0
 var boxing_punch
 var dummy
-
-
 
 var current_seq
 var last_seq
@@ -118,12 +108,12 @@ func _ready():
 	targets.append(get_node("BoxingPunch/RightUpperTarget"))
 	targets.append(get_node("BoxingPunch/PauseTarget"))
 	
-	configure_target(get_node("BoxingPunch/JabTarget"), LEFT, left_hand_base_color, left_hand_touch_color, JAB)
-	configure_target(get_node("BoxingPunch/CrossTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, CROSS)
-	configure_target(get_node("BoxingPunch/LeftHookTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_HOOK)
-	configure_target(get_node("BoxingPunch/RightHookTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_HOOK)
-	configure_target(get_node("BoxingPunch/LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_UPPER)	
-	configure_target(get_node("BoxingPunch/RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_UPPER)	
+	configure_target(get_node("BoxingPunch/JabTarget"), LEFT, left_hand_base_color, left_hand_touch_color, global.JAB)
+	configure_target(get_node("BoxingPunch/CrossTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, global.CROSS)
+	configure_target(get_node("BoxingPunch/LeftHookTarget"), LEFT, left_hand_base_color, left_hand_touch_color, global.LEFT_HOOK)
+	configure_target(get_node("BoxingPunch/RightHookTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, global.RIGHT_HOOK)
+	configure_target(get_node("BoxingPunch/LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, global.LEFT_UPPER)	
+	configure_target(get_node("BoxingPunch/RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, global.RIGHT_UPPER)	
 	loading_time = 2
 	reset()
 	
@@ -179,7 +169,7 @@ func _process(delta):
 	elif mode == MODE_WAIT:
 		waiting_time -= delta
 		if waiting_time <= 0 :
-			root.goto_scene("res://Menu.tscn")
+			get_tree().change_scene("res://Menu.tscn")		
 	rotate_punch(delta)
 	
 func _process_hand(area, hand):
@@ -203,17 +193,17 @@ func _process_hand(area, hand):
 		if last_correct_hit != num_hits:
 			points += 1			
 			last_correct_hit = num_hits
-			if current_hit == JAB or current_hit == CROSS:
+			if current_hit == global.JAB or current_hit == global.CROSS:
 				punch_rotation_target.x = -0.05
-			elif current_hit == LEFT_UPPER:
+			elif current_hit == global.LEFT_UPPER:
 				punch_rotation_target.y = -0.1
 				punch_rotation_target.x = 0.03
-			elif current_hit == LEFT_HOOK:
+			elif current_hit == global.LEFT_HOOK:
 				punch_rotation_target.y = -0.1
-			elif current_hit == RIGHT_UPPER:
+			elif current_hit == global.RIGHT_UPPER:
 				punch_rotation_target.y = 0.1
 				punch_rotation_target.x = 0.03
-			elif current_hit == RIGHT_HOOK:
+			elif current_hit == global.RIGHT_HOOK:
 				punch_rotation_target.y = 0.1
 	elif last_body[hand]:
 		last_body[hand].untouch()
@@ -229,28 +219,28 @@ func _process_rithm(delta):
 		if time > 0:
 			var music_ms = int(get_node("AudioStreamPlayer").get_playback_position() * 1000) + BEAT_CORRECTION
 			var remainder = music_ms % RITHM
-			current_seq = int(floor(music_ms / RITHM) + HIT_CORRECTION) % len(global.current_coreo)
+			current_seq = int(floor(music_ms / RITHM)) % len(global.current_coreo)
 			billboard_hits.set_text(global.HIT_NAMES[global.current_coreo[current_seq]])
 			if remainder < TIME_VIEW:
 				if current_seq != last_seq:					
 					last_seq = current_seq
 					current_hit = global.current_coreo[current_seq]
 					talk_hit(current_hit)
-					dummy_hit(current_hit)
-					if current_hit != PAUSE:
+					dummy.dummy_hit(current_hit)
+					if current_hit != global.PAUSE:
 						num_hits += 1
 					
 					targets[current_hit].set_active()
 					targets[current_hit].show()
-					if current_hit == CROSS:
-						targets[JAB].hide()
-					if current_hit == JAB:
-						targets[CROSS].hide()
+					if current_hit == global.CROSS:
+						targets[global.JAB].hide()
+					if current_hit == global.JAB:
+						targets[global.CROSS].hide()
 			else:
 				for t in targets:	
 					t.set_inactive()
-				targets[JAB].show()
-				targets[CROSS].show()
+				targets[global.JAB].show()
+				targets[global.CROSS].show()
 				current_hit = -1
 		else:
 			targets[global.current_coreo[current_seq]].set_inactive()
@@ -313,16 +303,3 @@ func rotate_punch_direction(axis, amount, direction):
 			else:
 				punch_rotation_target[direction] = 0
 				
-func dummy_hit(hit):
-	if hit == JAB:
-		dummy.jab()
-	elif hit == CROSS:
-		dummy.cross()
-	elif hit == LEFT_UPPER:
-		dummy.left_upper()
-	elif hit == LEFT_HOOK:
-		dummy.left_hook()
-	elif hit == RIGHT_UPPER:
-		dummy.right_upper()
-	elif hit == RIGHT_HOOK:
-		dummy.right_hook()

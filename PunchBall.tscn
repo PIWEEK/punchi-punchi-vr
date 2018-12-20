@@ -286,7 +286,6 @@ _sections_unfolded = [ "Albedo", "Flags", "UV1" ]
 
 [node name="punch ball" type="MeshInstance" parent="." index="0"]
 
-editor/display_folded = true
 transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
 layers = 1
 material_override = null
@@ -307,6 +306,7 @@ _sections_unfolded = [ "Transform", "material" ]
 [node name="DirectionalLight" type="DirectionalLight" parent="punch ball" index="0"]
 
 transform = Transform( 1, 0, 0, 0, 0.24166, 0.992523, 0, -1.96514, 0.122054, 0, 11.3911, 11.8598 )
+visible = false
 layers = 1
 light_color = Color( 1, 1, 1, 1 )
 light_energy = 5.0

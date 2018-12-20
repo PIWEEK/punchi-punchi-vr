@@ -19,6 +19,12 @@ var current_coreo_num = 0
 var touching = false
 var billboard_hint
 var is_ready = false
+var dummy
+var current_seq
+var last_seq
+var RITHM = 500
+var left_controller
+var right_controller
 
 func _ready():	
 	is_ready = false
@@ -39,12 +45,13 @@ func _ready():
 	# Retrieve the texture and set it to the viewport quad
 	get_node("ViewportHintsContainer").material_override.albedo_texture = viewport_hints.get_texture()
 	
+	var left_controller = get_node("Player/LeftController")
+	var right_controller = get_node("Player/RightController")
+	left_controller.get_node("GloveL").show()
+	right_controller.get_node("GloveR").show()	
 	
-	get_node("Player/LeftController/GloveL").show()
-	get_node("Player/RightController/GloveR").show()
-	
-	boxing_punch = get_node("BoxingPunch")
-	hit_box = get_node("HitBox")
+	boxing_punch = get_node("SelectGameMenu/BoxingPunch")
+	hit_box = get_node("SelectGameMenu/HitBox")
 	
 	left_controller_area = get_node("Player/LeftController/TouchArea")
 	right_controller_area = get_node("Player/RightController/TouchArea")
@@ -52,10 +59,13 @@ func _ready():
 	hands.append(get_node("Player/LeftController"))
 	hands.append(get_node("Player/RightController"))
 	
-	punch_ball_music = get_node("PunchBallMusic")
-	punch_ball_coreo = get_node("PunchBallCoreo")
+	punch_ball_music = get_node("BoxingMenu/PunchBallMusic")
+	punch_ball_coreo = get_node("BoxingMenu/PunchBallCoreo")
 	punch_ball_coreo.get_node("music").hide()
 	punch_ball_coreo.get_node("boxing glove").show()
+	
+	dummy = get_node("BoxingMenu/Dummy")
+	billboard_hint.set_text("ELIGE JUEGO")
 	
 	
 	touching = false
@@ -63,9 +73,8 @@ func _ready():
 	
 	current_song_num = 0
 	current_coreo_num = 0
-
-	play_song()
-	display_hint()
+	current_seq = 0
+	last_seq = -1	
 	is_ready = true
 
 func _process(delta):
@@ -73,6 +82,7 @@ func _process(delta):
 		var touching_left = _process_hand(left_controller_area, LEFT)
 		var touching_right = _process_hand(right_controller_area, RIGHT)
 		touching = touching_left or touching_right
+		_process_rithm(delta)
 	
 	
 func _process_hand(area, hand):
@@ -83,13 +93,16 @@ func _process_hand(area, hand):
 			for body in bodies:			
 				if body.get_parent() == hit_box:
 					loading = 1
-					print("PunchiDodge!!!")
 					get_tree().change_scene("res://PunchiDodge.tscn")		
 					return true
 				elif body.get_parent() == boxing_punch:
-					loading = 1
-					print("Boxing Punch!!!")
-					get_tree().change_scene("res://BoxScene.tscn")
+					get_node("SelectGameMenu").hide()
+					get_node("SelectGameMenu").translate(Vector3(0, -1000, 0))
+					get_node("BoxingMenu").show()
+					play_song()
+					display_hint()
+					left_controller.connect("button_pressed", self, "button_pressed")    
+					right_controller.connect("button_pressed", self, "button_pressed")
 					return true
 				elif body.get_parent() == punch_ball_music:
 					change_song()
@@ -120,7 +133,7 @@ func play_song():
 	get_node("AudioStreamPlayer").seek(8)
 	
 func display_hint():	
-	var text = ""
+	var text = "COREO SELECCIONADA:\n"
 	var num = 0
 	for s in global.current_coreo:
 		text += global.HIT_NAMES[s] + ", "
@@ -128,5 +141,22 @@ func display_hint():
 		if num == 4:
 			text += "\n"
 			num = 0
+	text += "\n"
+	text += "PULSA EL GATILLO PARA EMPEZAR"
 				
 	billboard_hint.set_text(text)
+	dummy.reset()
+
+func _process_rithm(delta):	
+	var music_ms = int(get_node("AudioStreamPlayer").get_playback_position() * 1000)
+	var remainder = music_ms % RITHM
+	current_seq = int(floor(music_ms / RITHM)) % len(global.current_coreo)	
+	if current_seq != last_seq:					
+		last_seq = current_seq
+		var current_hit = global.current_coreo[current_seq]
+		dummy.dummy_hit(current_hit)			
+	
+func button_pressed():
+	print("Pressed!")
+	loading = 1
+	get_tree().change_scene("res://BoxScene.tscn")
