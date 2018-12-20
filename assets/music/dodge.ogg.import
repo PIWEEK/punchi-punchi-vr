@@ -7,7 +7,10 @@ path="res://.import/dodge.ogg-9d5ed7cf989661817cb3a09c2b92a047.oggstr"
 [deps]
 
 source_file="res://assets/music/dodge.ogg"
+source_md5="73d20f58f6905298b0e2297e72f928c4"
+
 dest_files=[ "res://.import/dodge.ogg-9d5ed7cf989661817cb3a09c2b92a047.oggstr" ]
+dest_md5="8d2795605e336c3068281f868a6e4e2d"
 
 [params]
 

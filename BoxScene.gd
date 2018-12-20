@@ -92,9 +92,13 @@ var root
 var song
 var punch_rotation_target = Vector3(0, 0, 0)
 
-func _ready():
-	current_training = 1
+func _ready():	
 	root = get_node("/root/global")
+	root.initVR()
+	root.init_gloves(get_node("Player"))
+	
+	current_training = 0
+	
 	# Get the viewport and clear it
 	var viewport_hits = get_node("ViewportHits")
 	var viewport_score = get_node("ViewportScore")
@@ -132,11 +136,11 @@ func _ready():
 	get_node("AudioStreamPlayer").stream.set_loop(false)
 	
 	
-	left_controller_area = get_parent().get_node("Player/LeftController/TouchArea")
-	right_controller_area = get_parent().get_node("Player/RightController/TouchArea")
+	left_controller_area = get_node("Player/LeftController/TouchArea")
+	right_controller_area = get_node("Player/RightController/TouchArea")
 	
-	hands.append(get_parent().get_node("Player/LeftController"))
-	hands.append(get_parent().get_node("Player/RightController"))
+	hands.append(get_node("Player/LeftController"))
+	hands.append(get_node("Player/RightController"))
 	
 	targets.append(get_node("BoxingPunch/JabTarget"))
 	targets.append(get_node("BoxingPunch/CrossTarget"))
@@ -284,7 +288,8 @@ func _process_rithm(delta):
 					if current_hit == JAB:
 						targets[CROSS].hide()
 			else:
-				targets[current_round[current_seq]].set_inactive()
+				for t in targets:	
+					t.set_inactive()
 				targets[JAB].show()
 				targets[CROSS].show()
 				current_hit = -1

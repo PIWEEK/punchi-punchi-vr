@@ -8,7 +8,10 @@ path.etc2="res://.import/Concrete12_col.jpg-c64412c8b52a5f5e81a29880243f330f.etc
 [deps]
 
 source_file="res://assets/materials/Concrete12/Concrete12_col.jpg"
+source_md5="409ef7d011b10f5929de3a57de9bb5f0"
+
 dest_files=[ "res://.import/Concrete12_col.jpg-c64412c8b52a5f5e81a29880243f330f.s3tc.stex", "res://.import/Concrete12_col.jpg-c64412c8b52a5f5e81a29880243f330f.etc2.stex" ]
+dest_md5="a4b125e75c0aed19320f7d5ed2fa2ef6"
 
 [params]
 

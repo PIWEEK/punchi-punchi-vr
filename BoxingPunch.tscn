@@ -536,7 +536,7 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
 
-[node name="BoxingPunch" type="MeshInstance" index="0"]
+[node name="BoxingPunch" type="MeshInstance"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.95629, -0.287215, 6.82705 )
 layers = 1
@@ -565,6 +565,7 @@ _sections_unfolded = [ "material" ]
 [node name="DirectionalLight" type="DirectionalLight" parent="." index="0"]
 
 transform = Transform( 0.948838, 0.315764, 0, -0.315764, 0.948838, 0, 0, 0, 1, 0.769159, 13.305, 8.32409 )
+visible = false
 layers = 1
 light_color = Color( 1, 1, 1, 1 )
 light_energy = 5.0

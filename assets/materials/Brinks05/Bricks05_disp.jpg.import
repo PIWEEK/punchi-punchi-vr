@@ -8,7 +8,10 @@ path.etc2="res://.import/Bricks05_disp.jpg-5ed84d990635f6c98b63328a226598fb.etc2
 [deps]
 
 source_file="res://assets/materials/Brinks05/Bricks05_disp.jpg"
+source_md5="e5538875d99d4a468567685b630c68ff"
+
 dest_files=[ "res://.import/Bricks05_disp.jpg-5ed84d990635f6c98b63328a226598fb.s3tc.stex", "res://.import/Bricks05_disp.jpg-5ed84d990635f6c98b63328a226598fb.etc2.stex" ]
+dest_md5="defee318d8400dda8af3e5e74381dc4f"
 
 [params]
 

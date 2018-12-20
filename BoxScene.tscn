@@ -1,10 +1,13 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://BoxScene.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://BoxingPunch.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Target.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Dummy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Gym.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Ring.tscn" type="PackedScene" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -75,7 +78,6 @@ distance_fade_enable = false
 
 [sub_resource type="PlaneMesh" id=4]
 
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
@@ -131,7 +133,7 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
 
-[node name="BoxScene" type="Spatial"]
+[node name="BoxScene" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
@@ -140,7 +142,6 @@ _sections_unfolded = [ "Transform" ]
 
 stream = null
 volume_db = 0.0
-pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
@@ -316,7 +317,6 @@ _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
 stream = null
 volume_db = 0.0
-pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
@@ -366,5 +366,76 @@ _sections_unfolded = [ "Transform" ]
 
 transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -2.6674, 0, -3.25956 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="Player" parent="." index="8" instance=ExtResource( 6 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.224447 )
+
+[node name="Gym" parent="." index="9" instance=ExtResource( 7 )]
+
+transform = Transform( -2.8213e-07, 0, -1, 0, 1, 0, 1, 0, -2.8213e-07, -11.625, 0.034529, 20 )
+visible = false
+_sections_unfolded = [ "Transform" ]
+
+[node name="Ring" parent="." index="10" instance=ExtResource( 8 )]
+
+transform = Transform( -0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 0, -1.5, -3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="." index="11"]
+
+transform = Transform( 0.988925, 0.148417, 0, -0.0974508, 0.649327, 0.75424, 0.111942, -0.745886, 0.656599, 0, 6.63508, 4.34327 )
+layers = 1
+light_color = Color( 1, 1, 1, 1 )
+light_energy = 0.5
+light_indirect_energy = 1.0
+light_negative = false
+light_specular = 0.5
+light_bake_mode = 1
+light_cull_mask = -1
+shadow_enabled = false
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_bias = 0.1
+shadow_contact = 0.0
+shadow_reverse_cull_face = false
+editor_only = false
+directional_shadow_mode = 2
+directional_shadow_split_1 = 0.1
+directional_shadow_split_2 = 0.2
+directional_shadow_split_3 = 0.5
+directional_shadow_blend_splits = false
+directional_shadow_normal_bias = 0.8
+directional_shadow_bias_split_scale = 0.25
+directional_shadow_depth_range = 0
+directional_shadow_max_distance = 200.0
+_sections_unfolded = [ "Light" ]
+
+[node name="DirectionalLight2" type="DirectionalLight" parent="." index="12"]
+
+transform = Transform( 0.520606, -0.518796, -0.678101, 0.846427, 0.417737, 0.330237, 0.111942, -0.745886, 0.656599, 0, 2.26023, 4.34327 )
+layers = 1
+light_color = Color( 1, 1, 1, 1 )
+light_energy = 0.5
+light_indirect_energy = 1.0
+light_negative = false
+light_specular = 0.5
+light_bake_mode = 1
+light_cull_mask = -1
+shadow_enabled = false
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_bias = 0.1
+shadow_contact = 0.0
+shadow_reverse_cull_face = false
+editor_only = false
+directional_shadow_mode = 2
+directional_shadow_split_1 = 0.1
+directional_shadow_split_2 = 0.2
+directional_shadow_split_3 = 0.5
+directional_shadow_blend_splits = false
+directional_shadow_normal_bias = 0.8
+directional_shadow_bias_split_scale = 0.25
+directional_shadow_depth_range = 0
+directional_shadow_max_distance = 200.0
+_sections_unfolded = [ "Light" ]
 
 

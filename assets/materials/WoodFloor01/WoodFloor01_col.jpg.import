@@ -8,7 +8,10 @@ path.etc2="res://.import/WoodFloor01_col.jpg-1901cdaeb384c88eba2c7269e76aeaa3.et
 [deps]
 
 source_file="res://assets/materials/WoodFloor01/WoodFloor01_col.jpg"
+source_md5="3d3f6efed0233c7b12ccf6b1971c9448"
+
 dest_files=[ "res://.import/WoodFloor01_col.jpg-1901cdaeb384c88eba2c7269e76aeaa3.s3tc.stex", "res://.import/WoodFloor01_col.jpg-1901cdaeb384c88eba2c7269e76aeaa3.etc2.stex" ]
+dest_md5="3fad12b16edc7c11dc4e08cc5127fa14"
 
 [params]
 
