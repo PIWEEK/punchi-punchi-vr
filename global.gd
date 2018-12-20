@@ -44,17 +44,6 @@ func initVR():
     
         OS.vsync_enabled = false
         Engine.target_fps = 90
-
-func init_gloves(player):
-    var material = SpatialMaterial.new()
-    material.albedo_color = Color(0, 0, 255, 1)
-    player.get_node("LeftController/GloveL").set_surface_material(0, material)
-    player.get_node("LeftController/GloveL").show()
-
-    material = SpatialMaterial.new()
-    material.albedo_color = Color(255, 0, 0, 1)
-    player.get_node("RightController/GloveR").set_surface_material(0, material)
-    player.get_node("RightController/GloveR").show()
         
 func setTimeout(context, function, time):
     var timer = Timer.new()
