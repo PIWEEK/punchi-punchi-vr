@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://blender/boxing-punch.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://blender/boxing-punch-reduced.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://blender/metal.jpg" type="Texture" id=2]
 [ext_resource path="res://blender/Leather05_col.jpg" type="Texture" id=3]
 [ext_resource path="res://blender/Leather05_disp.jpg" type="Texture" id=4]
@@ -30,9 +30,9 @@ params_point_size = 1.0
 params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
-albedo_color = Color( 0.464844, 0.464844, 0.464844, 1 )
+albedo_color = Color( 0.296875, 0.296875, 0.296875, 1 )
 albedo_texture = ExtResource( 2 )
-metallic = 0.75
+metallic = 0.0
 metallic_specular = 0.5
 metallic_texture_channel = 0
 roughness = 0.0
@@ -50,7 +50,7 @@ refraction_enabled = false
 detail_enabled = false
 uv1_scale = Vector3( 1, 1, 1 )
 uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = true
+uv1_triplanar = false
 uv1_triplanar_sharpness = 1.0
 uv2_scale = Vector3( 1, 1, 1 )
 uv2_offset = Vector3( 0, 0, 0 )
@@ -58,6 +58,7 @@ uv2_triplanar = false
 uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
+_sections_unfolded = [ "Albedo" ]
 
 [sub_resource type="SpatialMaterial" id=2]
 
@@ -82,9 +83,9 @@ params_point_size = 1.0
 params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
-albedo_color = Color( 0.464844, 0.464844, 0.464844, 1 )
+albedo_color = Color( 0.296875, 0.296875, 0.296875, 1 )
 albedo_texture = ExtResource( 2 )
-metallic = 0.75
+metallic = 0.0
 metallic_specular = 0.5
 metallic_texture_channel = 0
 roughness = 0.0
@@ -102,7 +103,7 @@ refraction_enabled = false
 detail_enabled = false
 uv1_scale = Vector3( 1, 1, 1 )
 uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = true
+uv1_triplanar = false
 uv1_triplanar_sharpness = 1.0
 uv2_scale = Vector3( 1, 1, 1 )
 uv2_offset = Vector3( 0, 0, 0 )
@@ -169,7 +170,7 @@ uv2_triplanar = false
 uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
-_sections_unfolded = [ "Albedo", "Roughness" ]
+_sections_unfolded = [ "Albedo", "Roughness", "UV1" ]
 
 [sub_resource type="SpatialMaterial" id=4]
 
@@ -194,9 +195,9 @@ params_point_size = 1.0
 params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
-albedo_color = Color( 0.464844, 0.464844, 0.464844, 1 )
+albedo_color = Color( 0.296875, 0.296875, 0.296875, 1 )
 albedo_texture = ExtResource( 2 )
-metallic = 0.75
+metallic = 0.0
 metallic_specular = 0.5
 metallic_texture_channel = 0
 roughness = 0.0
@@ -214,7 +215,7 @@ refraction_enabled = false
 detail_enabled = false
 uv1_scale = Vector3( 1, 1, 1 )
 uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = true
+uv1_triplanar = false
 uv1_triplanar_sharpness = 1.0
 uv2_scale = Vector3( 1, 1, 1 )
 uv2_offset = Vector3( 0, 0, 0 )
@@ -222,7 +223,6 @@ uv2_triplanar = false
 uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
-_sections_unfolded = [ "Anisotropy" ]
 
 [sub_resource type="SpatialMaterial" id=5]
 
@@ -247,9 +247,9 @@ params_point_size = 1.0
 params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
-albedo_color = Color( 0.464844, 0.464844, 0.464844, 1 )
+albedo_color = Color( 0.296875, 0.296875, 0.296875, 1 )
 albedo_texture = ExtResource( 2 )
-metallic = 0.75
+metallic = 0.0
 metallic_specular = 0.5
 metallic_texture_channel = 0
 roughness = 0.0
@@ -267,7 +267,7 @@ refraction_enabled = false
 detail_enabled = false
 uv1_scale = Vector3( 1, 1, 1 )
 uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = true
+uv1_triplanar = false
 uv1_triplanar_sharpness = 1.0
 uv2_scale = Vector3( 1, 1, 1 )
 uv2_offset = Vector3( 0, 0, 0 )
@@ -299,9 +299,9 @@ params_point_size = 1.0
 params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
-albedo_color = Color( 0.464844, 0.464844, 0.464844, 1 )
+albedo_color = Color( 0.296875, 0.296875, 0.296875, 1 )
 albedo_texture = ExtResource( 2 )
-metallic = 0.75
+metallic = 0.0
 metallic_specular = 0.5
 metallic_texture_channel = 0
 roughness = 0.0
@@ -319,7 +319,7 @@ refraction_enabled = false
 detail_enabled = false
 uv1_scale = Vector3( 1, 1, 1 )
 uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = true
+uv1_triplanar = false
 uv1_triplanar_sharpness = 1.0
 uv2_scale = Vector3( 1, 1, 1 )
 uv2_offset = Vector3( 0, 0, 0 )
@@ -351,9 +351,9 @@ params_point_size = 1.0
 params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
-albedo_color = Color( 0.464844, 0.464844, 0.464844, 1 )
+albedo_color = Color( 0.296875, 0.296875, 0.296875, 1 )
 albedo_texture = ExtResource( 2 )
-metallic = 0.75
+metallic = 0.0
 metallic_specular = 0.5
 metallic_texture_channel = 0
 roughness = 0.0
@@ -371,7 +371,7 @@ refraction_enabled = false
 detail_enabled = false
 uv1_scale = Vector3( 1, 1, 1 )
 uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = true
+uv1_triplanar = false
 uv1_triplanar_sharpness = 1.0
 uv2_scale = Vector3( 1, 1, 1 )
 uv2_offset = Vector3( 0, 0, 0 )
@@ -403,9 +403,9 @@ params_point_size = 1.0
 params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
-albedo_color = Color( 0.464844, 0.464844, 0.464844, 1 )
+albedo_color = Color( 0.296875, 0.296875, 0.296875, 1 )
 albedo_texture = ExtResource( 2 )
-metallic = 0.75
+metallic = 0.0
 metallic_specular = 0.5
 metallic_texture_channel = 0
 roughness = 0.0
@@ -423,7 +423,7 @@ refraction_enabled = false
 detail_enabled = false
 uv1_scale = Vector3( 1, 1, 1 )
 uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = true
+uv1_triplanar = false
 uv1_triplanar_sharpness = 1.0
 uv2_scale = Vector3( 1, 1, 1 )
 uv2_offset = Vector3( 0, 0, 0 )
@@ -455,9 +455,9 @@ params_point_size = 1.0
 params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
-albedo_color = Color( 0.464844, 0.464844, 0.464844, 1 )
+albedo_color = Color( 0.296875, 0.296875, 0.296875, 1 )
 albedo_texture = ExtResource( 2 )
-metallic = 0.75
+metallic = 0.0
 metallic_specular = 0.5
 metallic_texture_channel = 0
 roughness = 0.0
@@ -475,7 +475,7 @@ refraction_enabled = false
 detail_enabled = false
 uv1_scale = Vector3( 1, 1, 1 )
 uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = true
+uv1_triplanar = false
 uv1_triplanar_sharpness = 1.0
 uv2_scale = Vector3( 1, 1, 1 )
 uv2_offset = Vector3( 0, 0, 0 )
@@ -507,9 +507,9 @@ params_point_size = 1.0
 params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
-albedo_color = Color( 0.464844, 0.464844, 0.464844, 1 )
+albedo_color = Color( 0.296875, 0.296875, 0.296875, 1 )
 albedo_texture = ExtResource( 2 )
-metallic = 0.75
+metallic = 0.0
 metallic_specular = 0.5
 metallic_texture_channel = 0
 roughness = 0.0
@@ -527,7 +527,7 @@ refraction_enabled = false
 detail_enabled = false
 uv1_scale = Vector3( 1, 1, 1 )
 uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = true
+uv1_triplanar = false
 uv1_triplanar_sharpness = 1.0
 uv2_scale = Vector3( 1, 1, 1 )
 uv2_offset = Vector3( 0, 0, 0 )
@@ -536,9 +536,10 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
 
-[node name="BoxingPunch" type="MeshInstance"]
+[node name="Spatial" type="Spatial" index="0"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.95629, -0.287215, 6.82705 )
+[node name="BoxingPunch" type="MeshInstance" parent="." index="0"]
+
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -560,35 +561,6 @@ material/6 = SubResource( 7 )
 material/7 = SubResource( 8 )
 material/8 = SubResource( 9 )
 material/9 = SubResource( 10 )
-_sections_unfolded = [ "material" ]
-
-[node name="DirectionalLight" type="DirectionalLight" parent="." index="0"]
-
-transform = Transform( 0.948838, 0.315764, 0, -0.315764, 0.948838, 0, 0, 0, 1, 0.769159, 13.305, 8.32409 )
-visible = false
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
-light_energy = 5.0
-light_indirect_energy = 1.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.1
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
-directional_shadow_mode = 2
-directional_shadow_split_1 = 0.1
-directional_shadow_split_2 = 0.2
-directional_shadow_split_3 = 0.5
-directional_shadow_blend_splits = false
-directional_shadow_normal_bias = 0.8
-directional_shadow_bias_split_scale = 0.25
-directional_shadow_depth_range = 0
-directional_shadow_max_distance = 200.0
-_sections_unfolded = [ "Light" ]
+_sections_unfolded = [ "Transform" ]
 
 

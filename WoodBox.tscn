@@ -182,7 +182,7 @@ uv2_triplanar = false
 uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
-_sections_unfolded = [ "Metallic", "Roughness" ]
+_sections_unfolded = [ "Albedo", "Metallic", "Roughness" ]
 
 [sub_resource type="PlaneMesh" id=6]
 
@@ -245,7 +245,7 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Albedo", "Metallic", "Roughness" ]
 
-[node name="Spatial" type="Spatial"]
+[node name="Spatial" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
 
@@ -285,7 +285,6 @@ _sections_unfolded = [ "Transform", "material" ]
 [node name="left" type="MeshInstance" parent="." index="2"]
 
 transform = Transform( 1, -0.000129927, -1.47625e-05, 1.69888e-05, 0.0171519, 0.999853, -0.000129654, -0.999853, 0.0171519, 0, 0, -1.02 )
-visible = false
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -303,7 +302,6 @@ _sections_unfolded = [ "Transform", "material" ]
 [node name="right" type="MeshInstance" parent="." index="3"]
 
 transform = Transform( 1, -0.000129927, -1.47625e-05, 1.69888e-05, 0.0171519, 0.999853, -0.000129654, -0.999853, 0.0171519, 0, 0, -1.02 )
-visible = false
 layers = 1
 material_override = null
 cast_shadow = 1
