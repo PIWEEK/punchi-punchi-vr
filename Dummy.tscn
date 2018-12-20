@@ -1,8 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Dummy.gd" type="Script" id=1]
 [ext_resource path="res://assets/3d/glove_left.obj" type="ArrayMesh" id=2]
-[ext_resource path="res://assets/3d/glove_rigth.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://glove-left.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/3d/glove_rigth.obj" type="ArrayMesh" id=4]
+[ext_resource path="res://glove-right.tscn" type="PackedScene" id=5]
 
 [sub_resource type="SphereMesh" id=1]
 
@@ -11,6 +13,130 @@ height = 0.3
 radial_segments = 64
 rings = 32
 is_hemisphere = false
+
+[sub_resource type="SpatialMaterial" id=2]
+
+render_priority = 0
+flags_transparent = false
+flags_unshaded = false
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 0, 0, 0, 1 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo" ]
+
+[sub_resource type="ShaderMaterial" id=3]
+
+render_priority = 0
+
+[sub_resource type="CubeMesh" id=4]
+
+material = SubResource( 3 )
+size = Vector3( 0.35, 0.8, 0.25 )
+subdivide_width = 0
+subdivide_height = 0
+subdivide_depth = 0
+
+[sub_resource type="SpatialMaterial" id=5]
+
+render_priority = 0
+flags_transparent = false
+flags_unshaded = false
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 0, 0, 0, 1 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo" ]
+
+[sub_resource type="CylinderMesh" id=6]
+
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.8
+radial_segments = 64
+rings = 4
 
 [sub_resource type="SpatialMaterial" id=7]
 
@@ -64,17 +190,13 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Albedo" ]
 
-[sub_resource type="ShaderMaterial" id=8]
+[sub_resource type="CylinderMesh" id=8]
 
-render_priority = 0
-
-[sub_resource type="CubeMesh" id=2]
-
-material = SubResource( 8 )
-size = Vector3( 0.35, 0.8, 0.25 )
-subdivide_width = 0
-subdivide_height = 0
-subdivide_depth = 0
+top_radius = 0.25
+bottom_radius = 0.5
+height = 0.1
+radial_segments = 64
+rings = 4
 
 [sub_resource type="SpatialMaterial" id=9]
 
@@ -128,127 +250,7 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Albedo" ]
 
-[sub_resource type="CylinderMesh" id=3]
-
-top_radius = 0.05
-bottom_radius = 0.05
-height = 0.8
-radial_segments = 64
-rings = 4
-
 [sub_resource type="SpatialMaterial" id=10]
-
-render_priority = 0
-flags_transparent = false
-flags_unshaded = false
-flags_vertex_lighting = false
-flags_no_depth_test = false
-flags_use_point_size = false
-flags_world_triplanar = false
-flags_fixed_size = false
-flags_albedo_tex_force_srgb = false
-vertex_color_use_as_albedo = false
-vertex_color_is_srgb = false
-params_diffuse_mode = 0
-params_specular_mode = 0
-params_blend_mode = 0
-params_cull_mode = 0
-params_depth_draw_mode = 0
-params_line_width = 1.0
-params_point_size = 1.0
-params_billboard_mode = 0
-params_grow = false
-params_use_alpha_scissor = false
-albedo_color = Color( 0, 0, 0, 1 )
-metallic = 0.0
-metallic_specular = 0.5
-metallic_texture_channel = 0
-roughness = 0.0
-roughness_texture_channel = 0
-emission_enabled = false
-normal_enabled = false
-rim_enabled = false
-clearcoat_enabled = false
-anisotropy_enabled = false
-ao_enabled = false
-depth_enabled = false
-subsurf_scatter_enabled = false
-transmission_enabled = false
-refraction_enabled = false
-detail_enabled = false
-uv1_scale = Vector3( 1, 1, 1 )
-uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = false
-uv1_triplanar_sharpness = 1.0
-uv2_scale = Vector3( 1, 1, 1 )
-uv2_offset = Vector3( 0, 0, 0 )
-uv2_triplanar = false
-uv2_triplanar_sharpness = 1.0
-proximity_fade_enable = false
-distance_fade_enable = false
-_sections_unfolded = [ "Albedo" ]
-
-[sub_resource type="CylinderMesh" id=4]
-
-top_radius = 0.25
-bottom_radius = 0.5
-height = 0.1
-radial_segments = 64
-rings = 4
-
-[sub_resource type="SpatialMaterial" id=11]
-
-render_priority = 0
-flags_transparent = false
-flags_unshaded = false
-flags_vertex_lighting = false
-flags_no_depth_test = false
-flags_use_point_size = false
-flags_world_triplanar = false
-flags_fixed_size = false
-flags_albedo_tex_force_srgb = false
-vertex_color_use_as_albedo = false
-vertex_color_is_srgb = false
-params_diffuse_mode = 0
-params_specular_mode = 0
-params_blend_mode = 0
-params_cull_mode = 0
-params_depth_draw_mode = 0
-params_line_width = 1.0
-params_point_size = 1.0
-params_billboard_mode = 0
-params_grow = false
-params_use_alpha_scissor = false
-albedo_color = Color( 0, 0, 0, 1 )
-metallic = 0.0
-metallic_specular = 0.5
-metallic_texture_channel = 0
-roughness = 0.0
-roughness_texture_channel = 0
-emission_enabled = false
-normal_enabled = false
-rim_enabled = false
-clearcoat_enabled = false
-anisotropy_enabled = false
-ao_enabled = false
-depth_enabled = false
-subsurf_scatter_enabled = false
-transmission_enabled = false
-refraction_enabled = false
-detail_enabled = false
-uv1_scale = Vector3( 1, 1, 1 )
-uv1_offset = Vector3( 0, 0, 0 )
-uv1_triplanar = false
-uv1_triplanar_sharpness = 1.0
-uv2_scale = Vector3( 1, 1, 1 )
-uv2_offset = Vector3( 0, 0, 0 )
-uv2_triplanar = false
-uv2_triplanar_sharpness = 1.0
-proximity_fade_enable = false
-distance_fade_enable = false
-_sections_unfolded = [ "Albedo" ]
-
-[sub_resource type="SpatialMaterial" id=5]
 
 render_priority = 0
 flags_transparent = false
@@ -300,7 +302,7 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Albedo" ]
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=11]
 
 render_priority = 0
 flags_transparent = false
@@ -352,7 +354,7 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Albedo" ]
 
-[node name="Dummy" type="Spatial"]
+[node name="Dummy" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
 
@@ -370,7 +372,7 @@ lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
 mesh = SubResource( 1 )
 skeleton = NodePath("..")
-material/0 = SubResource( 7 )
+material/0 = SubResource( 2 )
 _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
 [node name="MeshInstance2" type="MeshInstance" parent="." index="1"]
@@ -385,9 +387,9 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 2 )
+mesh = SubResource( 4 )
 skeleton = NodePath("..")
-material/0 = SubResource( 9 )
+material/0 = SubResource( 5 )
 _sections_unfolded = [ "material" ]
 
 [node name="MeshInstance3" type="MeshInstance" parent="." index="2"]
@@ -402,9 +404,9 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 3 )
+mesh = SubResource( 6 )
 skeleton = NodePath("..")
-material/0 = SubResource( 10 )
+material/0 = SubResource( 7 )
 _sections_unfolded = [ "Transform", "material" ]
 
 [node name="MeshInstance4" type="MeshInstance" parent="." index="3"]
@@ -419,9 +421,9 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 4 )
+mesh = SubResource( 8 )
 skeleton = NodePath("..")
-material/0 = SubResource( 11 )
+material/0 = SubResource( 9 )
 _sections_unfolded = [ "material" ]
 
 [node name="GloveL" type="Spatial" parent="." index="4"]
@@ -429,9 +431,10 @@ _sections_unfolded = [ "material" ]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15674, 1.38682, 0.205277 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="GloveMesh" type="MeshInstance" parent="GloveL" index="0"]
+[node name="GloveMesh2" type="MeshInstance" parent="GloveL" index="0"]
 
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
+visible = false
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -443,17 +446,24 @@ lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
 mesh = ExtResource( 2 )
 skeleton = NodePath("..")
-material/0 = SubResource( 5 )
+material/0 = SubResource( 10 )
+material/1 = null
 _sections_unfolded = [ "Transform", "material" ]
+
+[node name="GloveMesh" parent="GloveL" index="1" instance=ExtResource( 3 )]
+
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.000945166, -0.00137031, -0.00717485 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="GloveR" type="Spatial" parent="." index="5"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.148544, 1.38502, -0.034582 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="GloveMesh" type="MeshInstance" parent="GloveR" index="0"]
+[node name="GloveMesh2" type="MeshInstance" parent="GloveR" index="0"]
 
-transform = Transform( -0.1, 0, -3.25841e-08, 0, 0.1, 0, 3.25841e-08, 0, -0.1, 0, 0, -2.01166e-07 )
+transform = Transform( -0.1, 0, -3.25841e-08, 0, 0.1, 0, 3.25841e-08, 0, -0.1, 0, 0, -1.78814e-07 )
+visible = false
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -463,9 +473,15 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = ExtResource( 3 )
+mesh = ExtResource( 4 )
 skeleton = NodePath("..")
-material/0 = SubResource( 6 )
+material/0 = SubResource( 11 )
+material/1 = null
 _sections_unfolded = [ "Transform", "material" ]
+
+[node name="GloveMesh" parent="GloveR" index="1" instance=ExtResource( 5 )]
+
+transform = Transform( -0.0999981, 0, -0.000610625, 0, 0.1, 0, 0.000610625, 0, -0.0999981, 0, -0.00847971, 0.231031 )
+_sections_unfolded = [ "Transform" ]
 
 

@@ -95,7 +95,8 @@ var punch_rotation_target = Vector3(0, 0, 0)
 func _ready():	
 	root = get_node("/root/global")
 	root.initVR()
-	root.init_gloves(get_node("Player"))
+	get_node("Player/LeftController/GloveL").show()
+	get_node("Player/RightController/GloveR").show()
 	
 	current_training = 0
 	

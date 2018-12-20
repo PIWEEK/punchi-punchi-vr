@@ -31,7 +31,7 @@ func _ready():
 	punch_translation_zero[1].x = gloves[1].translation.x
 	punch_translation_zero[1].y = gloves[1].translation.y
 	punch_translation_zero[1].z = gloves[1].translation.z
-		
+			
 	
 func jab():	
 
@@ -67,21 +67,21 @@ func cross():
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x + PI / 2, punch_rotation_zero[1].y, punch_rotation_zero[1].z + PI),
-		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y, punch_translation_zero[1].z+0.2),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y + 0.2, punch_translation_zero[1].z+0.2),
 		'speed': 1000
 	})
 	
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x + PI / 2, punch_rotation_zero[1].y, punch_rotation_zero[1].z + PI),
-		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y, punch_translation_zero[1].z+0.7),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y + 0.2, punch_translation_zero[1].z+0.7),
 		'speed': SPEED
 	})
 	
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x + PI / 2, punch_rotation_zero[1].y, punch_rotation_zero[1].z + PI),
-		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y, punch_translation_zero[1].z + 0.2),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y + 0.2, punch_translation_zero[1].z + 0.2),
 		'speed': SPEED
 	})
 	
@@ -136,28 +136,28 @@ func right_hook():
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x + PI / 2, punch_rotation_zero[1].y - 1, punch_rotation_zero[1].z + PI),
-		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y, punch_translation_zero[1].z+0.2),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y + 0.2, punch_translation_zero[1].z+0.2),
 		'speed': 1000
 	})
 	
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x + PI / 2, punch_rotation_zero[1].y - 1, punch_rotation_zero[1].z + PI),
-		'target': Vector3(punch_translation_zero[1].x - 0.25, punch_translation_zero[1].y, punch_translation_zero[1].z+0.45),
+		'target': Vector3(punch_translation_zero[1].x - 0.25, punch_translation_zero[1].y + 0.2, punch_translation_zero[1].z+0.45),
 		'speed': SPEED
 	})
 	
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x + PI / 2, punch_rotation_zero[1].y + 1, punch_rotation_zero[1].z + PI),
-		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y, punch_translation_zero[1].z+0.7),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y + 0.2, punch_translation_zero[1].z+0.7),
 		'speed': SPEED
 	})
 	
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x + PI / 2, punch_rotation_zero[1].y, punch_rotation_zero[1].z + PI),
-		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y, punch_translation_zero[1].z + 0.2),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y + 0.2, punch_translation_zero[1].z + 0.2),
 		'speed': SPEED
 	})
 	
@@ -211,35 +211,35 @@ func right_upper():
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x - (PI/2) - 0.5, punch_rotation_zero[1].y, punch_rotation_zero[1].z),
-		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y + 0.25, punch_translation_zero[1].z+0.2),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y + 0.05, punch_translation_zero[1].z+0.2),
 		'speed': 1000
 	})
 	
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x - (PI/2) - 0.5, punch_rotation_zero[1].y, punch_rotation_zero[1].z),
-		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y - 0.1, punch_translation_zero[1].z+0.45),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y - 0.3, punch_translation_zero[1].z+0.45),
 		'speed': SPEED
 	})
 	
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x - (PI/2), punch_rotation_zero[1].y, punch_rotation_zero[1].z),
-		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y - 0.1, punch_translation_zero[1].z+0.7),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y - 0.3, punch_translation_zero[1].z+0.7),
 		'speed': SPEED
 	})
 	
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x - 0.5, punch_rotation_zero[1].y, punch_rotation_zero[1].z),
-		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y - 0.25, punch_translation_zero[1].z+0.7),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y - 0.45, punch_translation_zero[1].z+0.7),
 		'speed': 1000
 	})
 	
 	hits_sequence.append({
 		'glove': 1,
 		'rotation': Vector3(punch_rotation_zero[1].x - 0.5, punch_rotation_zero[1].y, punch_rotation_zero[1].z),
-		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y + 0.1, punch_translation_zero[1].z + 0.2),
+		'target': Vector3(punch_translation_zero[1].x, punch_translation_zero[1].y - 0.1, punch_translation_zero[1].z + 0.2),
 		'speed': SPEED
 	})
 	
