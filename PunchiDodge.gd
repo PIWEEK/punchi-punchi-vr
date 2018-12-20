@@ -30,6 +30,8 @@ func _ready():
     root.setInterval(self, "spawn", 1)
 
 func _physics_process(delta):
+    print(Performance.get_monitor(Performance.TIME_FPS))
+    
     var speed = 9 + (level * 0.5)
     for child in get_children():
         if isDodge(child):
