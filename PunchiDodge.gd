@@ -49,7 +49,7 @@ func _physics_process(delta):
             child.translate(Vector3(0, 0, delta * speed))
         elif isHitBox(child):
             if child.touched:
-                child.translate(Vector3(0, 0, delta * -8))
+                child.translate(Vector3(0, 0, delta * -1))
             else:
                 # print(speed)
                 child.translate(Vector3(0, 0, delta * speed))
