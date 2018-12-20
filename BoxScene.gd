@@ -18,8 +18,6 @@ var LEFT_UPPER = 4
 var RIGHT_UPPER = 5
 var PAUSE = 6
 
-var HIT_NAMES = ["JAB", "CROSS", "L HOOK", "R HOOK", "L UPPER", "R UPPER", "WAIT"]
-
 var targets = []
 var hands = []
 
@@ -30,40 +28,10 @@ var RITHM = 500
 var TIME_VIEW = 350
 var BEAT_CORRECTION = 100
 var HIT_CORRECTION = 0
-var current_training
 var boxing_punch
 var dummy
 
-var TRAININGS = [
-	{
-		"rounds": [
-			[JAB, PAUSE, CROSS, PAUSE, JAB, PAUSE, CROSS, PAUSE],
-			[LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE],
-			[JAB, PAUSE, CROSS, PAUSE, JAB, PAUSE, CROSS, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE]
-		],
-		"song": "ironbacon.ogg"
-	},
-	{
-		"rounds": [
-			[JAB, JAB, CROSS, PAUSE, JAB, JAB, CROSS, PAUSE],
-			[LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK],
-			[JAB, JAB, CROSS, PAUSE, JAB, JAB, CROSS, PAUSE, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK, LEFT_UPPER, LEFT_HOOK, RIGHT_UPPER, RIGHT_HOOK]
-		],
-		"song": "electrodoodle.ogg"
-	},
-	{
-		"rounds": [
-			[JAB, CROSS, LEFT_UPPER, PAUSE, CROSS, JAB, RIGHT_UPPER, PAUSE],
-			[LEFT_HOOK, RIGHT_HOOK, LEFT_UPPER, RIGHT_UPPER, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE],
-			[JAB, CROSS, LEFT_UPPER, PAUSE, CROSS, JAB, RIGHT_UPPER, PAUSE, LEFT_HOOK, RIGHT_HOOK, LEFT_UPPER, RIGHT_UPPER, LEFT_HOOK, PAUSE, RIGHT_HOOK, PAUSE]
-		],
-		"song": "beachfront.ogg"
-	}	
-]
 
-
-var current_round_num = 0
-var current_round
 
 var current_seq
 var last_seq
@@ -95,10 +63,9 @@ var punch_rotation_target = Vector3(0, 0, 0)
 func _ready():	
 	root = get_node("/root/global")
 	root.initVR()
+	
 	get_node("Player/LeftController/GloveL").show()
 	get_node("Player/RightController/GloveR").show()
-	
-	current_training = 0
 	
 	# Get the viewport and clear it
 	var viewport_hits = get_node("ViewportHits")
@@ -131,7 +98,7 @@ func _ready():
 	hit_sounds.append(null)
 	applause_sound = load("res://assets/music/applause.ogg")
 	bell_sound = load("res://assets/music/bell.ogg")
-	song = load("res://assets/music/"+TRAININGS[current_training]["song"])
+	song = load("res://assets/music/"+global.current_song)
 	
 	get_node("AudioStreamPlayer").stream = song
 	get_node("AudioStreamPlayer").stream.set_loop(false)
@@ -158,30 +125,28 @@ func _ready():
 	configure_target(get_node("BoxingPunch/LeftUpperTarget"), LEFT, left_hand_base_color, left_hand_touch_color, LEFT_UPPER)	
 	configure_target(get_node("BoxingPunch/RightUpperTarget"), RIGHT, right_hand_base_color, right_hand_touch_color, RIGHT_UPPER)	
 	loading_time = 2
-	reset(0)
+	reset()
 	
 	
-	
-	
-	
-func reset(round_num):
-	_play_sound(bell_sound)
-	current_round_num = round_num
-	current_round = TRAININGS[current_training]["rounds"][current_round_num]
-	time = MAX_TIME
+func display_hint():	
 	var text = ""
 	var num = 0
-	for s in current_round:
-		text += HIT_NAMES[s] + ", "
+	for s in global.current_coreo:
+		text += global.HIT_NAMES[s] + ", "
 		num += 1
 		if num == 4:
 			text += "\n"
 			num = 0
 				
 	billboard_hint.set_text(text)
+	
+func reset():
+	_play_sound(bell_sound)
+	time = MAX_TIME	
+	display_hint()
 	billboard_hint.show()
 	billboard_score.hide()
-	billboard_hits.set_text("ROUND  "+str(round_num + 1))
+	billboard_hits.set_text("")
 	
 	song_started = false	
 	current_hit = -1
@@ -214,10 +179,7 @@ func _process(delta):
 	elif mode == MODE_WAIT:
 		waiting_time -= delta
 		if waiting_time <= 0 :
-			if current_round_num < 2:
-				reset(current_round_num + 1)
-			else:
-				root.goto_scene("res://Calibration.tscn")
+			root.goto_scene("res://Menu.tscn")
 	rotate_punch(delta)
 	
 func _process_hand(area, hand):
@@ -260,27 +222,23 @@ func _process_hand(area, hand):
 		
 func _process_rithm(delta):
 	wait -= delta
-	if wait > 5:
-		billboard_hits.set_text("ROUND  "+str(current_round_num + 1))
-	elif wait > 0:
-		billboard_hits.set_text(str(ceil(wait)))
-		
+	if wait > 0:
+		billboard_hits.set_text(str(ceil(wait)))		
 	else:
 		_process_time()
 		if time > 0:
 			var music_ms = int(get_node("AudioStreamPlayer").get_playback_position() * 1000) + BEAT_CORRECTION
 			var remainder = music_ms % RITHM
-			current_seq = int(floor(music_ms / RITHM) + HIT_CORRECTION) % len(current_round)
-			billboard_hits.set_text(HIT_NAMES[current_round[current_seq]])
+			current_seq = int(floor(music_ms / RITHM) + HIT_CORRECTION) % len(global.current_coreo)
+			billboard_hits.set_text(global.HIT_NAMES[global.current_coreo[current_seq]])
 			if remainder < TIME_VIEW:
-				if current_seq != last_seq:
-					num_hits += 1
+				if current_seq != last_seq:					
 					last_seq = current_seq
-					current_hit = current_round[current_seq]
+					current_hit = global.current_coreo[current_seq]
 					talk_hit(current_hit)
 					dummy_hit(current_hit)
-					if current_hit == PAUSE:
-						points += 1
+					if current_hit != PAUSE:
+						num_hits += 1
 					
 					targets[current_hit].set_active()
 					targets[current_hit].show()
@@ -295,7 +253,7 @@ func _process_rithm(delta):
 				targets[CROSS].show()
 				current_hit = -1
 		else:
-			targets[current_round[current_seq]].set_inactive()
+			targets[global.current_coreo[current_seq]].set_inactive()
 			billboard_hits.set_text("GOOD\nWORK!")
 			waiting_time = 10			
 			mode = MODE_WAIT		

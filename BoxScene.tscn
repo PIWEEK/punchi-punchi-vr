@@ -9,7 +9,7 @@
 [ext_resource path="res://Gym.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Ring.tscn" type="PackedScene" id=8]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=6]
 
 size = 128
 use_mipmaps = false
@@ -17,7 +17,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=7]
 
 size = 36
 use_mipmaps = false
@@ -78,7 +78,6 @@ distance_fade_enable = false
 
 [sub_resource type="PlaneMesh" id=4]
 
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
@@ -143,7 +142,6 @@ _sections_unfolded = [ "Transform" ]
 
 stream = null
 volume_db = 0.0
-pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
@@ -193,7 +191,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0.859375, 0.050354, 0.050354, 1 )
 text = "READY"
 align = 1
@@ -249,7 +247,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0.100267, 0.773438, 0.0241699, 1 )
 align = 1
 valign = 1
@@ -272,7 +270,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0.100267, 0.773438, 0.0241699, 1 )
 align = 1
 valign = 1
@@ -283,7 +281,7 @@ _sections_unfolded = [ "Rect", "custom_colors", "custom_constants", "custom_font
 
 [node name="ViewportHitsContainer" type="MeshInstance" parent="." index="3"]
 
-transform = Transform( -0.939692, 0.342021, 9.64943e-008, 0, -2.8213e-007, 1, 0.342021, 0.939692, 2.65115e-007, -2.5, 2, -5 )
+transform = Transform( -0.939692, 0.342021, 9.64943e-08, 0, -2.8213e-07, 1, 0.342021, 0.939692, 2.65115e-07, -2.5, 2, -5 )
 layers = 1
 material_override = SubResource( 3 )
 cast_shadow = 1
@@ -300,7 +298,7 @@ _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
 [node name="ViewportScoreContainer" type="MeshInstance" parent="." index="4"]
 
-transform = Transform( -0.939692, -0.342021, -0.000118102, -1.12515e-010, -0.000345305, 1, -0.342021, 0.939692, 0.000324481, 2.5, 2, -5 )
+transform = Transform( -0.939692, -0.342021, -0.000118102, -1.12515e-10, -0.000345305, 1, -0.342021, 0.939692, 0.000324481, 2.5, 2, -5 )
 layers = 1
 material_override = SubResource( 5 )
 cast_shadow = 1
@@ -319,7 +317,6 @@ _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
 stream = null
 volume_db = 0.0
-pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
@@ -367,7 +364,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Dummy" parent="." index="7" instance=ExtResource( 5 )]
 
-transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -1.98274, 0, -3.25956 )
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -2.6674, 0, -3.25956 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Player" parent="." index="8" instance=ExtResource( 6 )]
@@ -376,13 +373,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.224447 )
 
 [node name="Gym" parent="." index="9" instance=ExtResource( 7 )]
 
-transform = Transform( -2.8213e-007, 0, -1, 0, 1, 0, 1, 0, -2.8213e-007, -11.625, 0.034529, 20 )
+transform = Transform( -2.8213e-07, 0, -1, 0, 1, 0, 1, 0, -2.8213e-07, -11.625, 0.034529, 20 )
 visible = false
 _sections_unfolded = [ "Transform" ]
 
 [node name="Ring" parent="." index="10" instance=ExtResource( 8 )]
 
-transform = Transform( -0.5, 0, -4.37114e-008, 0, 0.5, 0, 4.37114e-008, 0, -0.5, 0, -1.5, -3 )
+transform = Transform( -0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 0, -1.5, -3 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="." index="11"]

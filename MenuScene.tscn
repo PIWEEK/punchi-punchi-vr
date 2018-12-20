@@ -1,0 +1,325 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://MenuScene.gd" type="Script" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Ring.tscn" type="PackedScene" id=3]
+[ext_resource path="res://BoxingPunch.tscn" type="PackedScene" id=4]
+[ext_resource path="res://HitBox.tscn" type="PackedScene" id=5]
+[ext_resource path="res://PunchBall.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=7]
+
+[sub_resource type="BoxShape" id=1]
+
+extents = Vector3( 1.3, 4.5, 1.3 )
+
+[sub_resource type="BoxShape" id=2]
+
+extents = Vector3( 0.17, 0.17, 0.17 )
+
+[sub_resource type="SphereShape" id=3]
+
+radius = 0.25
+
+[sub_resource type="SpatialMaterial" id=5]
+
+render_priority = 0
+flags_transparent = false
+flags_unshaded = false
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 1, 1, 1, 1 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+
+[sub_resource type="PlaneMesh" id=4]
+
+size = Vector2( 2, 2 )
+subdivide_width = 0
+subdivide_depth = 0
+
+[sub_resource type="DynamicFont" id=7]
+
+size = 36
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 7 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[node name="MenuScene" type="Spatial" index="0"]
+
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Player" parent="." index="0" instance=ExtResource( 2 )]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="Ring" parent="." index="1" instance=ExtResource( 3 )]
+
+transform = Transform( -0.5, 0, 1.62921e-07, 0, 0.5, 0, -1.62921e-07, 0, -0.5, 0, -1.5, 0 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="BoxingPunch" parent="." index="2" instance=ExtResource( 4 )]
+
+transform = Transform( 0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, 0.75, 0.504014, 0.742866 )
+_sections_unfolded = [ "Geometry", "Transform", "material" ]
+
+[node name="StaticBody" type="StaticBody" parent="BoxingPunch" index="1"]
+
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BoxingPunch/StaticBody" index="0"]
+
+transform = Transform( 0.999736, 0, -0.023012, 0, 1, 0, 0.023012, 0, 0.999736, 2.12521, 5.55086, -4.39108 )
+shape = SubResource( 1 )
+disabled = false
+
+[node name="HitBox" parent="." index="3" instance=ExtResource( 5 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.71169, 0.983404, -0.414538 )
+
+[node name="StaticBody" type="StaticBody" parent="HitBox" index="4"]
+
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="HitBox/StaticBody" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00984752, 0, 0.00341237 )
+shape = SubResource( 2 )
+disabled = false
+
+[node name="DirectionalLight" type="DirectionalLight" parent="." index="4"]
+
+transform = Transform( 0.988925, 0.148417, 0, -0.0974508, 0.649327, 0.75424, 0.111942, -0.745886, 0.656599, 0, 6.63508, 4.34327 )
+layers = 1
+light_color = Color( 1, 1, 1, 1 )
+light_energy = 0.5
+light_indirect_energy = 1.0
+light_negative = false
+light_specular = 0.5
+light_bake_mode = 1
+light_cull_mask = -1
+shadow_enabled = false
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_bias = 0.1
+shadow_contact = 0.0
+shadow_reverse_cull_face = false
+editor_only = false
+directional_shadow_mode = 2
+directional_shadow_split_1 = 0.1
+directional_shadow_split_2 = 0.2
+directional_shadow_split_3 = 0.5
+directional_shadow_blend_splits = false
+directional_shadow_normal_bias = 0.8
+directional_shadow_bias_split_scale = 0.25
+directional_shadow_depth_range = 0
+directional_shadow_max_distance = 200.0
+_sections_unfolded = [ "Light" ]
+
+[node name="DirectionalLight2" type="DirectionalLight" parent="." index="5"]
+
+transform = Transform( 0.520606, -0.518796, -0.678101, 0.846427, 0.417737, 0.330237, 0.111942, -0.745886, 0.656599, 0, 2.26023, 4.34327 )
+layers = 1
+light_color = Color( 1, 1, 1, 1 )
+light_energy = 0.5
+light_indirect_energy = 1.0
+light_negative = false
+light_specular = 0.5
+light_bake_mode = 1
+light_cull_mask = -1
+shadow_enabled = false
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_bias = 0.1
+shadow_contact = 0.0
+shadow_reverse_cull_face = false
+editor_only = false
+directional_shadow_mode = 2
+directional_shadow_split_1 = 0.1
+directional_shadow_split_2 = 0.2
+directional_shadow_split_3 = 0.5
+directional_shadow_blend_splits = false
+directional_shadow_normal_bias = 0.8
+directional_shadow_bias_split_scale = 0.25
+directional_shadow_depth_range = 0
+directional_shadow_max_distance = 200.0
+_sections_unfolded = [ "Light" ]
+
+[node name="PunchBallMusic" parent="." index="6" instance=ExtResource( 6 )]
+
+transform = Transform( 0.266049, 0, -0.423342, 0, 0.5, 0, 0.423342, 0, 0.266049, 0.125754, 1.42649, -1.08557 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody" type="StaticBody" parent="PunchBallMusic" index="3"]
+
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="PunchBallMusic/StaticBody" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000473142, 0.2962, -0.000297666 )
+shape = SubResource( 3 )
+disabled = false
+
+[node name="PunchBallCoreo" parent="." index="7" instance=ExtResource( 6 )]
+
+transform = Transform( 0.266049, 0, -0.423342, 0, 0.5, 0, 0.423342, 0, 0.266049, 0.484091, 1.42649, -0.512629 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody" type="StaticBody" parent="PunchBallCoreo" index="3"]
+
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+friction = 1.0
+bounce = 0.0
+constant_linear_velocity = Vector3( 0, 0, 0 )
+constant_angular_velocity = Vector3( 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="PunchBallCoreo/StaticBody" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000473142, 0.2962, -0.000297666 )
+shape = SubResource( 3 )
+disabled = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="8"]
+
+stream = null
+volume_db = 0.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="ViewportHintsContainer" type="MeshInstance" parent="." index="9"]
+
+transform = Transform( -0.7184, -0.69563, -0.000240205, -1.12515e-10, -0.000345305, 1, -0.69563, 0.7184, 0.000248067, 3.08113, 3.72411, -3.13793 )
+layers = 1
+material_override = SubResource( 5 )
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 4 )
+skeleton = NodePath("..")
+material/0 = null
+_sections_unfolded = [ "Geometry", "Transform", "material" ]
+
+[node name="ViewportHints" type="Viewport" parent="." index="10"]
+
+arvr = false
+size = Vector2( 800, 400 )
+own_world = false
+world = null
+transparent_bg = true
+msaa = 0
+hdr = false
+disable_3d = false
+usage = 0
+debug_draw = 0
+render_target_v_flip = true
+render_target_clear_mode = 0
+render_target_update_mode = 2
+audio_listener_enable_2d = false
+audio_listener_enable_3d = false
+physics_object_picking = false
+gui_disable_input = false
+gui_snap_controls_to_pixels = true
+shadow_atlas_size = 0
+shadow_atlas_quad_0 = 2
+shadow_atlas_quad_1 = 2
+shadow_atlas_quad_2 = 3
+shadow_atlas_quad_3 = 4
+_sections_unfolded = [ "GUI", "Physics", "Render Target", "Rendering", "Shadow Atlas" ]
+
+[node name="Node2D" type="Node2D" parent="ViewportHints" index="0"]
+
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z Index" ]
+
+[node name="Hint" type="Label" parent="ViewportHints/Node2D" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 800.0
+margin_bottom = 400.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.100267, 0.773438, 0.0241699, 1 )
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
+
+

@@ -166,7 +166,6 @@ _sections_unfolded = [ "Albedo", "Metallic", "UV1" ]
 
 [sub_resource type="PlaneMesh" id=4]
 
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
@@ -226,7 +225,6 @@ _sections_unfolded = [ "Albedo" ]
 
 [sub_resource type="PlaneMesh" id=6]
 
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
@@ -288,6 +286,7 @@ _sections_unfolded = [ "Albedo", "Flags", "UV1" ]
 
 [node name="punch ball" type="MeshInstance" parent="." index="0"]
 
+editor/display_folded = true
 transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
 layers = 1
 material_override = null
