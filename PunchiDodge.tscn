@@ -19,7 +19,7 @@ mesh = SubResource( 1 )
 transform_array = PoolVector3Array(  )
 color_array = PoolColorArray(  )
 
-[node name="PunchiDodge" type="Spatial" index="0"]
+[node name="PunchiDodge" type="Spatial"]
 
 script = ExtResource( 1 )
 
