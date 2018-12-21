@@ -14,6 +14,7 @@ var score
 var points = 0
 var lastHitbox
 var limit
+var leftRayCast
 
 func _ready():
     root = get_node("/root/global");
@@ -28,6 +29,7 @@ func _ready():
     
     leftHandTouch = get_node("Player/LeftController/TouchArea")
     leftHandTouch.connect("body_entered", self, "leftPunch")
+    leftRayCast = get_node("Player/LeftController/RayCast")
     
     rightHandTouch = get_node("Player/RightController/TouchArea")
     rightHandTouch.connect("body_entered", self, "rightPunch")
@@ -53,18 +55,13 @@ func _physics_process(delta):
             if child.touched:
                 child.translate(Vector3(0, 0, delta * -1))
             else:
-                var isOverlapping = false
-                for overlap in overlappingLeft:
-                    if overlap == child:
-                        isOverlapping = true
-                for overlap in overlappingRight:
-                    if overlap == child:
-                        isOverlapping = true      
-                        
-                # print(speed)
-                print(isOverlapping)Q
-                if !isOverlapping:
-                    child.translate(Vector3(0, 0, delta * speed))
+                leftRayCast.cast_to(Vector3(0, 0, delta * speed))
+                
+                if leftRayCast.is_colliding():
+                    var collider = leftRayCast.get_collider()
+                    print(collider)
+                    
+                child.translate(Vector3(0, 0, delta * speed))
     
 func isDodge(body):
     return body.get_filename() == dodgeScene.get_path()
