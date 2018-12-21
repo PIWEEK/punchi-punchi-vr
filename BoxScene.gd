@@ -196,7 +196,7 @@ func _process(delta):
 	elif mode == MODE_WAIT:
 		waiting_time -= delta
 		if waiting_time <= 0 :
-			get_tree().change_scene("res://Menu.tscn")		
+			get_tree().change_scene("res://MenuScene.tscn")		
 	rotate_punch(delta)
 	
 func _process_hand(area, hand):
@@ -282,7 +282,7 @@ func _process_rithm(delta):
 		else:
 			targets[global.current_coreo[current_seq]].set_inactive()
 			billboard_hint.bbcode_text = "\n\n\n[center][b][color=#FF0000]GOOD WORK[/color][/b][/center]"
-			waiting_time = 6			
+			waiting_time = 10			
 			mode = MODE_WAIT		
 			for t in targets:	
 				t.untouch()
