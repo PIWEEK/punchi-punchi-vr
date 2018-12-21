@@ -45,8 +45,11 @@ func _ready():
 	# Retrieve the texture and set it to the viewport quad
 	get_node("ViewportHintsContainer").material_override.albedo_texture = viewport_hints.get_texture()
 	
-	var left_controller = get_node("Player/LeftController")
-	var right_controller = get_node("Player/RightController")
+	left_controller = get_node("Player/LeftController")
+	right_controller = get_node("Player/RightController")
+	hands.append(left_controller)
+	hands.append(right_controller)
+	
 	left_controller.get_node("GloveL").show()
 	right_controller.get_node("GloveR").show()	
 	
@@ -90,6 +93,7 @@ func _process_hand(area, hand):
 	var bodies = area.get_overlapping_bodies()
 	if len(bodies) > 0:
 		if not touching:
+			hands[hand].rumble = 1
 			for body in bodies:			
 				if body.get_parent() == hit_box:
 					loading = 1
@@ -112,6 +116,7 @@ func _process_hand(area, hand):
 					return true
 		return true
 	else:
+		hands[hand].rumble = 0
 		return false
 			
 func change_song():
@@ -156,7 +161,7 @@ func _process_rithm(delta):
 		var current_hit = global.current_coreo[current_seq]
 		dummy.dummy_hit(current_hit)			
 	
-func button_pressed():
+func button_pressed(a):
 	print("Pressed!")
 	loading = 1
 	get_tree().change_scene("res://BoxScene.tscn")

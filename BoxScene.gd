@@ -32,14 +32,20 @@ var billboard_hits
 var current_hit = -1
 
 var sound_player
+var effect_player
 var applause_sound
 var bell_sound
+var three_sound
+var two_sound
+var one_sound
+var punch_sounds = []
 var hit_sounds = []
 var MAX_TIME = 55
 var time = 55
 var points = 0
 var num_hits = 0
 var last_correct_hit = -1
+var last_wait_second = -1
 
 
 var MODE_PLAY = 0
@@ -78,6 +84,7 @@ func _ready():
 	billboard_hint = get_node("ViewportScore/Node2D/Hint")
 	billboard_score = get_node("ViewportScore/Node2D/Label")
 	sound_player = get_node("SoundPlayer")
+	effect_player = get_node("SoundPlayer")
 	# Preload sounds
 	hit_sounds.append(load("res://assets/music/jab.ogg"))
 	hit_sounds.append(load("res://assets/music/cross.ogg"))
@@ -88,6 +95,14 @@ func _ready():
 	hit_sounds.append(null)
 	applause_sound = load("res://assets/music/applause.ogg")
 	bell_sound = load("res://assets/music/bell.ogg")
+	three_sound = load("res://assets/music/three.ogg")
+	two_sound = load("res://assets/music/two.ogg")
+	one_sound = load("res://assets/music/one.ogg")
+	punch_sounds.append(load("res://assets/music/punch1.ogg"))
+	punch_sounds.append(load("res://assets/music/punch2.ogg"))
+	punch_sounds.append(load("res://assets/music/punch3.ogg"))
+	punch_sounds.append(load("res://assets/music/punch4.ogg"))
+	punch_sounds.append(load("res://assets/music/punch5.ogg"))
 	song = load("res://assets/music/"+global.current_song)
 	
 	get_node("AudioStreamPlayer").stream = song
@@ -131,6 +146,7 @@ func display_hint():
 	billboard_hint.set_text(text)
 	
 func reset():
+	randomize()
 	_play_sound(bell_sound)
 	time = MAX_TIME	
 	display_hint()
@@ -138,6 +154,7 @@ func reset():
 	billboard_score.hide()
 	billboard_hits.set_text("")
 	
+	last_wait_second = -1	
 	song_started = false	
 	current_hit = -1
 	last_seq = -1
@@ -192,6 +209,7 @@ func _process_hand(area, hand):
 		hands[hand].rumble = 1
 		if last_correct_hit != num_hits:
 			points += 1			
+			_play_effect(punch_sounds[randi() % len(punch_sounds)])
 			last_correct_hit = num_hits
 			if current_hit == global.JAB or current_hit == global.CROSS:
 				punch_rotation_target.x = -0.05
@@ -213,7 +231,16 @@ func _process_hand(area, hand):
 func _process_rithm(delta):
 	wait -= delta
 	if wait > 0:
-		billboard_hits.set_text(str(ceil(wait)))		
+		var wait_second = ceil(wait)
+		if wait_second != last_wait_second:
+			last_wait_second = wait_second
+			billboard_hits.set_text(str(wait_second))
+			if wait_second == 3:
+				_play_sound(three_sound)
+			elif wait_second == 2:
+				_play_sound(two_sound)
+			if wait_second == 1:
+				_play_sound(one_sound)
 	else:
 		_process_time()
 		if time > 0:
@@ -278,6 +305,11 @@ func _play_sound(sound):
 	sound_player.stream = sound
 	sound_player.stream.set_loop(false)
 	sound_player.play()
+	
+func _play_effect(sound):
+	effect_player.stream = sound
+	effect_player.stream.set_loop(false)
+	effect_player.play()
 	
 func rotate_punch(delta):
 	if boxing_punch:		
