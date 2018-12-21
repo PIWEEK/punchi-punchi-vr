@@ -84,7 +84,7 @@ func _ready():
 	billboard_hint = get_node("ViewportHits/Node2D/Hint")
 	billboard_score = get_node("ViewportScore/Node2D/LabelScore")
 	sound_player = get_node("SoundPlayer")
-	effect_player = get_node("SoundPlayer")
+	effect_player = get_node("EffectPlayer")
 	# Preload sounds
 	hit_sounds.append(load("res://assets/music/jab.ogg"))
 	hit_sounds.append(load("res://assets/music/cross.ogg"))
@@ -281,8 +281,8 @@ func _process_rithm(delta):
 				current_hit = -1
 		else:
 			targets[global.current_coreo[current_seq]].set_inactive()
-			billboard_time.set_text("GOOD\nWORK!")
-			waiting_time = 10			
+			billboard_hint.bbcode_text = "\n\n\n[center][b][color=#FF0000]GOOD WORK[/color][/b][/center]"
+			waiting_time = 6			
 			mode = MODE_WAIT		
 			for t in targets:	
 				t.untouch()

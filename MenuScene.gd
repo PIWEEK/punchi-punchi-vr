@@ -82,7 +82,6 @@ func _ready():
 	last_seq = -1	
 	boxing_menu_mode = false
 	is_ready = true
-	start_boxing_menu()
 
 func _process(delta):
 	if is_ready and not loading:
