@@ -25,6 +25,7 @@ var last_seq
 var RITHM = 500
 var left_controller
 var right_controller
+var boxing_menu_mode = false
 
 func _ready():	
 	is_ready = false
@@ -68,7 +69,7 @@ func _ready():
 	punch_ball_coreo.get_node("boxing glove").show()
 	
 	dummy = get_node("BoxingMenu/Dummy")
-	billboard_hint.set_text("ELIGE JUEGO")
+	billboard_hint.bbcode_text = "\n\n\n[center][b][color=#FF0000]ELIGE JUEGO[/color][/b][/center]"
 	
 	
 	touching = false
@@ -78,6 +79,7 @@ func _ready():
 	current_coreo_num = 0
 	current_seq = 0
 	last_seq = -1	
+	boxing_menu_mode = false
 	is_ready = true
 
 func _process(delta):
@@ -85,7 +87,8 @@ func _process(delta):
 		var touching_left = _process_hand(left_controller_area, LEFT)
 		var touching_right = _process_hand(right_controller_area, RIGHT)
 		touching = touching_left or touching_right
-		_process_rithm(delta)
+		if boxing_menu_mode:
+			_process_rithm(delta)
 	
 	
 func _process_hand(area, hand):
@@ -100,13 +103,7 @@ func _process_hand(area, hand):
 					get_tree().change_scene("res://PunchiDodge.tscn")		
 					return true
 				elif body.get_parent() == boxing_punch:
-					get_node("SelectGameMenu").hide()
-					get_node("SelectGameMenu").translate(Vector3(0, -1000, 0))
-					get_node("BoxingMenu").show()
-					play_song()
-					display_hint()
-					left_controller.connect("button_pressed", self, "button_pressed")    
-					right_controller.connect("button_pressed", self, "button_pressed")
+					start_boxing_menu()
 					return true
 				elif body.get_parent() == punch_ball_music:
 					change_song()
@@ -118,6 +115,16 @@ func _process_hand(area, hand):
 	else:
 		hands[hand].rumble = 0
 		return false
+
+func start_boxing_menu():
+	get_node("SelectGameMenu").hide()
+	get_node("SelectGameMenu").translate(Vector3(0, -1000, 0))
+	get_node("BoxingMenu").show()
+	play_song()
+	display_hint()
+	left_controller.connect("button_pressed", self, "button_pressed")    
+	right_controller.connect("button_pressed", self, "button_pressed")
+	boxing_menu_mode = true
 			
 func change_song():
 	current_song_num = (current_song_num + 1) % len(global.SONGS)
@@ -138,19 +145,25 @@ func play_song():
 	get_node("AudioStreamPlayer").seek(8)
 	
 func display_hint():	
-	var text = "COREO SELECCIONADA:\n"
+	var text = "[center][i][color=#0000FF]COREO SELECCIONADA[/color][/i][/center]\n\n[center]"
+	if len(global.current_coreo) == 8:
+		text += "\n"
 	var num = 0
+	var color
 	for s in global.current_coreo:
-		text += global.HIT_NAMES[s] + ", "
+		color = "#00FF00"
+		if num == current_seq:
+			color = "#FFFFFF"
+		text += "[color=" + color + "]" + global.HIT_NAMES[s] + "[/color]"
+		text += "[color=#00FF00], [/color]"
 		num += 1
-		if num == 4:
-			text += "\n"
-			num = 0
-	text += "\n"
-	text += "PULSA EL GATILLO PARA EMPEZAR"
+		if num % 4 == 0:
+			text += "[/center]\n[center]"
+	if len(global.current_coreo) == 8:
+		text += "\n"
+	text += "[/center]\n[center][color=#0000FF]PULSA EL GATILLO PARA EMPEZAR[/color][/center]"
 				
-	billboard_hint.set_text(text)
-	dummy.reset()
+	billboard_hint.bbcode_text = text
 
 func _process_rithm(delta):	
 	var music_ms = int(get_node("AudioStreamPlayer").get_playback_position() * 1000)
@@ -159,7 +172,8 @@ func _process_rithm(delta):
 	if current_seq != last_seq:					
 		last_seq = current_seq
 		var current_hit = global.current_coreo[current_seq]
-		dummy.dummy_hit(current_hit)			
+		dummy.dummy_hit(current_hit)
+		display_hint()	
 	
 func button_pressed(a):
 	print("Pressed!")

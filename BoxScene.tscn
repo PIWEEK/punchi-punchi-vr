@@ -78,7 +78,6 @@ distance_fade_enable = false
 
 [sub_resource type="PlaneMesh" id=4]
 
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
@@ -134,7 +133,7 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
 
-[node name="BoxScene" type="Spatial" index="0"]
+[node name="BoxScene" type="Spatial"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
@@ -143,7 +142,6 @@ _sections_unfolded = [ "Transform" ]
 
 stream = null
 volume_db = 0.0
-pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
@@ -283,7 +281,7 @@ _sections_unfolded = [ "Rect", "custom_colors", "custom_constants", "custom_font
 
 [node name="ViewportHitsContainer" type="MeshInstance" parent="." index="3"]
 
-transform = Transform( -0.939692, 0.342021, 9.64943e-008, 0, -2.8213e-007, 1, 0.342021, 0.939692, 2.65115e-007, -2.5, 2, -5 )
+transform = Transform( -0.939692, 0.342021, 9.64943e-08, 0, -2.8213e-07, 1, 0.342021, 0.939692, 2.65115e-07, -2.5, 2, -5 )
 layers = 1
 material_override = SubResource( 3 )
 cast_shadow = 1
@@ -300,7 +298,7 @@ _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
 [node name="ViewportScoreContainer" type="MeshInstance" parent="." index="4"]
 
-transform = Transform( -0.939692, -0.342021, -0.000118102, -1.12515e-010, -0.000345305, 1, -0.342021, 0.939692, 0.000324481, 2.5, 2, -5 )
+transform = Transform( -0.939692, -0.342021, -0.000118102, -1.12515e-10, -0.000345305, 1, -0.342021, 0.939692, 0.000324481, 2.5, 2, -5 )
 layers = 1
 material_override = SubResource( 5 )
 cast_shadow = 1
@@ -319,7 +317,6 @@ _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
 stream = null
 volume_db = 0.0
-pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
@@ -328,7 +325,6 @@ bus = "Master"
 
 stream = null
 volume_db = 0.0
-pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
@@ -385,13 +381,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.224447 )
 
 [node name="Gym" parent="." index="10" instance=ExtResource( 7 )]
 
-transform = Transform( -2.8213e-007, 0, -1, 0, 1, 0, 1, 0, -2.8213e-007, -11.625, 0.034529, 20 )
+transform = Transform( -2.8213e-07, 0, -1, 0, 1, 0, 1, 0, -2.8213e-07, -11.625, 0.034529, 20 )
 visible = false
 _sections_unfolded = [ "Transform" ]
 
 [node name="Ring" parent="." index="11" instance=ExtResource( 8 )]
 
-transform = Transform( -0.5, 0, -4.37114e-008, 0, 0.5, 0, 4.37114e-008, 0, -0.5, 0, -1.5, -3 )
+transform = Transform( -0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 0, -1.5, -3 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="." index="12"]
