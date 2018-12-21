@@ -14,7 +14,8 @@ var score
 var points = 0
 var lastHitbox
 var limit
-var leftRayCast
+var interval
+var waitTime  = 1
 
 func _ready():
     root = get_node("/root/global");
@@ -29,7 +30,6 @@ func _ready():
     
     leftHandTouch = get_node("Player/LeftController/TouchArea")
     leftHandTouch.connect("body_entered", self, "leftPunch")
-    leftRayCast = get_node("Player/LeftController/RayCast")
     
     rightHandTouch = get_node("Player/RightController/TouchArea")
     rightHandTouch.connect("body_entered", self, "rightPunch")
@@ -39,14 +39,14 @@ func _ready():
     
     score = get_node("Score")
     
-    root.setInterval(self, "spawn", 1)
+    interval = root.setInterval(self, "spawn", waitTime)
     score.printScore(points)
 
 func _physics_process(delta):
-    print(Performance.get_monitor(Performance.TIME_FPS))
+    #print(Performance.get_monitor(Performance.TIME_FPS))
     var overlappingLeft = leftHandTouch.get_overlapping_bodies()
     var overlappingRight = rightHandTouch.get_overlapping_bodies()
-    var speed = 9 + (level * 0.5)
+    var speed = 10
     
     for child in get_children():
         if isDodge(child):
@@ -55,12 +55,6 @@ func _physics_process(delta):
             if child.touched:
                 child.translate(Vector3(0, 0, delta * -1))
             else:
-                leftRayCast.cast_to(Vector3(0, 0, delta * speed))
-                
-                if leftRayCast.is_colliding():
-                    var collider = leftRayCast.get_collider()
-                    print(collider)
-                    
                 child.translate(Vector3(0, 0, delta * speed))
     
 func isDodge(body):
@@ -84,6 +78,7 @@ func stopRumble():
         
 func leftPunch(body): 
     if isHitBox(body) and !body.touched:
+        body.translation.z = leftHand.translation.z
         leftHand.rumble = 1
         body.hit()   
         root.setTimeout(self, "stopRumble", 0.25)
@@ -94,6 +89,7 @@ func leftPunch(body):
     
 func rightPunch(body): 
     if isHitBox(body) and !body.touched:
+        body.translation.z = rightHand.translation.z
         rightHand.rumble = 1
         body.hit()       
         root.setTimeout(self, "stopRumble", 0.25)
@@ -104,7 +100,32 @@ func rightPunch(body):
     
 func increaseLevel():
     if level < 100:
-        level = level + 1.5
+        if level == 10:
+            waitTime = waitTime - 0.1
+            interval.set_wait_time(waitTime)
+        elif level == 20:
+            waitTime = waitTime - 0.1
+            interval.set_wait_time(waitTime)
+        elif level == 30:
+            waitTime = waitTime - 0.1
+            interval.set_wait_time(waitTime)
+        elif level == 40:
+            waitTime = waitTime - 0.1
+            interval.set_wait_time(waitTime)
+        elif level == 50:
+            waitTime = waitTime - 0.1
+            interval.set_wait_time(waitTime)
+        elif level == 60:
+            waitTime = waitTime - 0.1
+            interval.set_wait_time(waitTime)
+        elif level == 70:
+            waitTime = waitTime - 0.1
+            interval.set_wait_time(waitTime)                        
+        elif level == 80:
+            waitTime = waitTime - 0.1
+            interval.set_wait_time(waitTime)                                    
+            
+        level = level + 1
     else:
         print("limit")
         
@@ -131,8 +152,6 @@ func createHitBox(position):
     
     var y
     var x = 0
-    
-    position = 1
     
     if position == 0: # top
        y = root.fightRightHandPosition.y + 0.5

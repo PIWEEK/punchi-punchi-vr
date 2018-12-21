@@ -10,7 +10,7 @@
 [ext_resource path="res://HitBox.tscn" type="PackedScene" id=8]
 [ext_resource path="res://BoxingPunch.tscn" type="PackedScene" id=9]
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=1]
 
 render_priority = 0
 flags_transparent = false
@@ -61,13 +61,14 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
 
-[sub_resource type="PlaneMesh" id=5]
+[sub_resource type="PlaneMesh" id=2]
 
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=3]
 
 size = 36
 use_mipmaps = false
@@ -75,19 +76,19 @@ use_filter = false
 font_data = ExtResource( 5 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="SphereShape" id=3]
+[sub_resource type="SphereShape" id=4]
 
 radius = 0.25
 
-[sub_resource type="BoxShape" id=2]
+[sub_resource type="BoxShape" id=5]
 
 extents = Vector3( 0.17, 0.17, 0.17 )
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="BoxShape" id=6]
 
 extents = Vector3( 1.3, 4.5, 1.3 )
 
-[node name="MenuScene" type="Spatial" index="0"]
+[node name="MenuScene" type="Spatial"]
 
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
 script = ExtResource( 1 )
@@ -99,7 +100,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Ring" parent="." index="1" instance=ExtResource( 3 )]
 
-transform = Transform( -0.5, 0, 1.62921e-07, 0, 0.5, 0, -1.62921e-07, 0, -0.5, 0, -1.5, -1.38579 )
+transform = Transform( -0.5, 0, 1.62921e-007, 0, 0.5, 0, -1.62921e-007, 0, -0.5, 0, -1.5, -1.38579 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="." index="2"]
@@ -162,15 +163,16 @@ _sections_unfolded = [ "Light" ]
 
 stream = ExtResource( 4 )
 volume_db = 0.0
+pitch_scale = 1.0
 autoplay = true
 mix_target = 0
 bus = "Master"
 
 [node name="ViewportHintsContainer" type="MeshInstance" parent="." index="5"]
 
-transform = Transform( -1, -3.25841e-07, 1.62921e-07, 1.62921e-07, 2.65431e-14, 1, -3.25841e-07, 1, 2.65431e-14, 0.017691, 1.16836, -4.6251 )
+transform = Transform( -1, -3.25841e-007, 1.62921e-007, 1.62921e-007, 2.65431e-014, 1, -3.25841e-007, 1, 2.65431e-014, 0.017691, 1.16836, -4.6251 )
 layers = 1
-material_override = SubResource( 4 )
+material_override = SubResource( 1 )
 cast_shadow = 1
 extra_cull_margin = 0.0
 use_in_baked_light = false
@@ -178,7 +180,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 5 )
+mesh = SubResource( 2 )
 skeleton = NodePath("..")
 material/0 = null
 _sections_unfolded = [ "Geometry", "Transform", "material" ]
@@ -228,7 +230,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.100267, 0.773438, 0.0241699, 1 )
 align = 1
 valign = 1
@@ -265,7 +267,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 [node name="CollisionShape" type="CollisionShape" parent="BoxingMenu/PunchBallCoreo/StaticBody" index="0"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000473142, 0.2962, -0.000297666 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 disabled = false
 
 [node name="PunchBallMusic" parent="BoxingMenu" index="2" instance=ExtResource( 7 )]
@@ -288,7 +290,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 [node name="CollisionShape" type="CollisionShape" parent="BoxingMenu/PunchBallMusic/StaticBody" index="0"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000473142, 0.2962, -0.000297666 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 disabled = false
 
 [node name="SelectGameMenu" type="Spatial" parent="." index="8"]
@@ -312,7 +314,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 [node name="CollisionShape" type="CollisionShape" parent="SelectGameMenu/HitBox/StaticBody" index="0"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00984752, 0, 0.00341237 )
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 disabled = false
 
 [node name="BoxingPunch" parent="SelectGameMenu" index="1" instance=ExtResource( 9 )]
@@ -335,7 +337,7 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 [node name="CollisionShape" type="CollisionShape" parent="SelectGameMenu/BoxingPunch/StaticBody" index="0"]
 
 transform = Transform( 0.999736, 0, -0.023012, 0, 1, 0, 0.023012, 0, 0.999736, 2.12521, 5.55086, -4.39108 )
-shape = SubResource( 1 )
+shape = SubResource( 6 )
 disabled = false
 
 
