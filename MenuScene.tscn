@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://MenuScene.gd" type="Script" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -66,14 +66,6 @@ distance_fade_enable = false
 size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
-
-[sub_resource type="DynamicFont" id=3]
-
-size = 36
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 5 )
-_sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=9]
 
@@ -238,31 +230,7 @@ _sections_unfolded = [ "GUI", "Physics", "Render Target", "Rendering", "Shadow A
 
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z Index" ]
 
-[node name="Hint2" type="Label" parent="ViewportHints/Node2D" index="0"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 800.0
-margin_bottom = 400.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 0.100267, 0.773438, 0.0241699, 1 )
-align = 1
-valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
-
-[node name="Hint" type="RichTextLabel" parent="ViewportHints/Node2D" index="1"]
+[node name="Hint" type="RichTextLabel" parent="ViewportHints/Node2D" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -279,6 +247,7 @@ size_flags_vertical = 1
 custom_fonts/italics_font = SubResource( 9 )
 custom_fonts/bold_font = SubResource( 7 )
 custom_fonts/normal_font = SubResource( 8 )
+custom_constants/table_hseparation = 10
 bbcode_enabled = true
 bbcode_text = ""
 visible_characters = -1
@@ -290,7 +259,7 @@ scroll_active = false
 scroll_following = false
 selection_enabled = false
 override_selected_font_color = false
-_sections_unfolded = [ "BBCode", "Rect", "custom_fonts" ]
+_sections_unfolded = [ "BBCode", "Rect", "custom_constants", "custom_fonts" ]
 
 [node name="BoxingMenu" type="Spatial" parent="." index="7"]
 

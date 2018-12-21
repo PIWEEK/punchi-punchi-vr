@@ -28,7 +28,7 @@ var last_seq
 
 var billboard_score
 var billboard_hint
-var billboard_hits
+var billboard_time
 var current_hit = -1
 
 var sound_player
@@ -80,9 +80,9 @@ func _ready():
 
 	boxing_punch = get_node("BoxingPunch")
 	dummy = get_node("Dummy")
-	billboard_hits = get_node("ViewportHits/Node2D/Label")
-	billboard_hint = get_node("ViewportScore/Node2D/Hint")
-	billboard_score = get_node("ViewportScore/Node2D/Label")
+	billboard_time = get_node("ViewportScore/Node2D/LabelTime")
+	billboard_hint = get_node("ViewportHits/Node2D/Hint")
+	billboard_score = get_node("ViewportScore/Node2D/LabelScore")
 	sound_player = get_node("SoundPlayer")
 	effect_player = get_node("SoundPlayer")
 	# Preload sounds
@@ -134,16 +134,26 @@ func _ready():
 	
 	
 func display_hint():	
-	var text = ""
+	var text = "[center]\n"
+	if len(global.current_coreo) == 8:
+		text += "\n"
 	var num = 0
+	var color
 	for s in global.current_coreo:
-		text += global.HIT_NAMES[s] + ", "
+		if num == current_seq:
+			text += "[i][color=#FFFFFF]" + global.HIT_NAMES[s] + "[/color][/i]"
+		else:
+			text += "[color=#00FF00]" + global.HIT_NAMES[s] + "[/color]"
+		text += "[color=#00FF00], [/color]"
 		num += 1
-		if num == 4:
+		if num % 4 == 0:
 			text += "\n"
-			num = 0
+	if len(global.current_coreo) == 8:
+		text += "\n"
+	text += "[/center]"
 				
-	billboard_hint.set_text(text)
+	billboard_hint.bbcode_text = text
+	
 	
 func reset():
 	randomize()
@@ -152,7 +162,7 @@ func reset():
 	display_hint()
 	billboard_hint.show()
 	billboard_score.hide()
-	billboard_hits.set_text("")
+	billboard_time.set_text("")
 	
 	last_wait_second = -1	
 	song_started = false	
@@ -234,7 +244,7 @@ func _process_rithm(delta):
 		var wait_second = ceil(wait)
 		if wait_second != last_wait_second:
 			last_wait_second = wait_second
-			billboard_hits.set_text(str(wait_second))
+			billboard_time.set_text(str(wait_second))
 			if wait_second == 3:
 				_play_sound(three_sound)
 			elif wait_second == 2:
@@ -246,11 +256,11 @@ func _process_rithm(delta):
 		if time > 0:
 			var music_ms = int(get_node("AudioStreamPlayer").get_playback_position() * 1000) + BEAT_CORRECTION
 			var remainder = music_ms % RITHM
-			current_seq = int(floor(music_ms / RITHM)) % len(global.current_coreo)
-			billboard_hits.set_text(global.HIT_NAMES[global.current_coreo[current_seq]])
+			current_seq = int(floor(music_ms / RITHM)) % len(global.current_coreo)			
 			if remainder < TIME_VIEW:
 				if current_seq != last_seq:					
 					last_seq = current_seq
+					display_hint()
 					current_hit = global.current_coreo[current_seq]
 					talk_hit(current_hit)
 					dummy.dummy_hit(current_hit)
@@ -271,7 +281,7 @@ func _process_rithm(delta):
 				current_hit = -1
 		else:
 			targets[global.current_coreo[current_seq]].set_inactive()
-			billboard_hits.set_text("GOOD\nWORK!")
+			billboard_time.set_text("GOOD\nWORK!")
 			waiting_time = 10			
 			mode = MODE_WAIT		
 			for t in targets:	
@@ -285,7 +295,7 @@ func play_applause(who):
 	_play_sound(applause_sound)
 
 func _process_time():
-	billboard_hint.hide()
+	billboard_time.hide()
 	billboard_score.show()
 	time = int(ceil(MAX_TIME - get_node("AudioStreamPlayer").get_playback_position()))
 	if time < 0:

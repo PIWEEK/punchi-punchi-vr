@@ -72,6 +72,7 @@ func _ready():
 	billboard_hint.bbcode_text = "\n\n\n[center][b][color=#FF0000]ELIGE JUEGO[/color][/b][/center]"
 	
 	
+	
 	touching = false
 	loading = false
 	
@@ -81,6 +82,7 @@ func _ready():
 	last_seq = -1	
 	boxing_menu_mode = false
 	is_ready = true
+	start_boxing_menu()
 
 func _process(delta):
 	if is_ready and not loading:
@@ -145,23 +147,23 @@ func play_song():
 	get_node("AudioStreamPlayer").seek(8)
 	
 func display_hint():	
-	var text = "[center][i][color=#0000FF]COREO SELECCIONADA[/color][/i][/center]\n\n[center]"
+	var text = "[center][i][color=#0000FF]COREO SELECCIONADA[/color][/i]\n"
 	if len(global.current_coreo) == 8:
 		text += "\n"
 	var num = 0
 	var color
 	for s in global.current_coreo:
-		color = "#00FF00"
 		if num == current_seq:
-			color = "#FFFFFF"
-		text += "[color=" + color + "]" + global.HIT_NAMES[s] + "[/color]"
+			text += "[i][color=#FFFFFF]" + global.HIT_NAMES[s] + "[/color][/i]"
+		else:
+			text += "[color=#00FF00]" + global.HIT_NAMES[s] + "[/color]"
 		text += "[color=#00FF00], [/color]"
 		num += 1
 		if num % 4 == 0:
-			text += "[/center]\n[center]"
+			text += "\n"
 	if len(global.current_coreo) == 8:
 		text += "\n"
-	text += "[/center]\n[center][color=#0000FF]PULSA EL GATILLO PARA EMPEZAR[/color][/center]"
+	text += "\n[color=#0000FF]PULSA EL GATILLO PARA EMPEZAR[/color][/center]"
 				
 	billboard_hint.bbcode_text = text
 
